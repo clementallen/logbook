@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="author" content="Clement Allen">
+
+    <!-- Material Design fonts -->
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/vendor.min.css">
+    <link rel="stylesheet" href="/css/main.min.css">
+
+</head>
+<body>
+
+    <nav class="navbar navbar-info">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed btn-hamburger" data-toggle="collapse" data-target="#main-basic-navbar" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <div class="hamburger hamburger--collapse">
+                        <div class="hamburger-box">
+                            <div class="hamburger-inner"></div>
+                        </div>
+                    </div>
+                </button>
+                <a class="navbar-brand" href="/">Logbook</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="main-basic-navbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="/flights">Flights</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {{#unless signedIn}}
+                        <li><a class="nav-signin" href="/signin">Sign In</a></li>
+                        <li><a class="nav-register" href="/register">Register</a></li>
+                    {{else}}
+                        <li><a class="nav-account" href="/account">Account</a></li>
+                        <li><a class="nav-signout" href="/signout">Sign Out</a></li>
+                    {{/unless}}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        {{#if message}}
+            <div class="message-alert-container">
+                <div class="alert alert-dismissible alert-danger message-alert">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <p>{{message}}</p>
+                </div>
+            </div>
+        {{/if}}
+
+        {{{body}}}
+    </div>
+
+    <script src="/js/vendor.min.js"></script>
+    <script src="/js/main.min.js"></script>
+
+</body>
+</html>

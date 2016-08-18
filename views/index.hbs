@@ -1,0 +1,13 @@
+{{#if tempMessage}}
+    <div class="alert alert-info">{{tempMessage}}</div>
+{{/if}}
+
+<div class="jumbotron text-center">
+    <h1>Welcome to HCV's logbook</h1>
+    {{#unless signedIn}}
+        <p>
+            <a href="/signin" class="btn btn-info btn-lg btn-raised home-signin">Sign In</a>
+            <a href="/register" class="btn btn-info btn-lg btn-raised home-register">Register</a>
+        </p>
+    {{/unless}}
+</div>

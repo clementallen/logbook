@@ -1,0 +1,33 @@
+<div class="col-sm-6 col-sm-offset-3">
+
+    <div class="panel panel-default auth-container">
+
+        <form action="/register" method="post">
+            <legend>Register</legend>
+
+            <p>Welcome to HCV's Logbook!</p>
+            <p>Enter a Username and Password below to register for a new account.</p>
+
+            <div class="form-group">
+                <label for="inputUsername" class="control-label">Username</label>
+                <input type="text" class="form-control" id="inputUsername" placeholder="Username" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword" class="control-label">Password</label>
+                 <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" required>
+            </div>
+
+            <div class="form-group">
+                <div class="button-container">
+                    <button type="submit" class="btn btn-primary btn-raised btn-submit">Register</button>
+                    <a href="/"><button type="button" class="btn btn-default btn-raised">Cancel</button></a>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <p>Already have an account? <a href="/signin">Sign In</a></p>
+
+</div>

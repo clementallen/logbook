@@ -1,0 +1,22 @@
+#lightbox {
+    background: $lightbox-colour;
+    height: 100%;
+    left: 0;
+    opacity: .6;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 50;
+}
+
+.message-alert-container {
+    left: 25%;
+    position: fixed;
+    top: 50px;
+    width: 50%;
+    z-index: 500;
+}
+
+.message-alert {
+    margin: 0 auto;
+}
