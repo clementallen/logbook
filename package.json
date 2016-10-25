@@ -22,7 +22,7 @@
     "morgan": "^1.7.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
-    "request": "^2.74.0",
+    "request": "^2.76.0",
     "serve-favicon": "^2.3.0"
   },
   "devDependencies": {
