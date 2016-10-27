@@ -21,4 +21,12 @@ a:hover {
     padding: 0;
 }
 
+#add-flight-error,
+#edit-flight-error {
+    display: none;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+
 @import 'partials/messaging';

@@ -1,7 +1,7 @@
 var express = require('express');
 var api = express.Router();
 var mongoose = require('mongoose');
-var middleware = require('./middleware');
+var middleware = require('../modules/middleware');
 
 var flightApiGet = require('./flightApi/get');
 var flightApiPost = require('./flightApi/post');

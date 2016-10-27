@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var User = require('../models/User');
-var middleware = require('./middleware');
+var middleware = require('../modules/middleware');
 var accountDelete = require('./account/delete');
 
 router.get('/delete', middleware.signedInOnly, accountDelete);

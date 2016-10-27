@@ -1,4 +1,4 @@
-var middleware = require('./middleware');
+var middleware = require('../modules/middleware');
 
 module.exports = function(app, passport) {
     app.get('/signin', middleware.signedOutOnly, function(req, res) {

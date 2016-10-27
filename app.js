@@ -13,6 +13,7 @@ var MongoStore = require('connect-mongo/es5')(session);
 
 var index = require('./routes/index');
 var account = require('./routes/account');
+var logbook = require('./routes/logbook');
 var api = require('./routes/api');
 
 require('./config/passport')(passport);
@@ -33,8 +34,13 @@ app.set('view engine', '.hbs');
 
 app.use(morgan('dev'));
 app.use(favicon(path.join(__dirname, 'assets', 'favicon.ico')));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({
+    limit: '10mb'
+}));
+app.use(bodyParser.urlencoded({
+    extended: true,
+    limit: '10mb'
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
@@ -60,6 +66,7 @@ require('./routes/register')(app, passport);
 require('./routes/signout')(app, passport);
 
 app.use('/account', account);
+app.use('/logbook', logbook);
 app.use('/api', api);
 
 // Catch 404 and forward to error handler
