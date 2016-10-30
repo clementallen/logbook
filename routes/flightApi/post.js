@@ -32,7 +32,7 @@ function saveFlight(flightData) {
 
     flight.takeoffTime = flightData.takeoffTimestamp;
     flight.landingTime = flightData.landingTimestamp;
-    flight.flightDuration = (flightData.landingTimestamp- flightData.takeoffTimestamp) / 1000;
+    flight.duration = (flightData.landingTimestamp- flightData.takeoffTimestamp) / 1000;
 
     flight.save(function(err, flight) {
         console.log(err);

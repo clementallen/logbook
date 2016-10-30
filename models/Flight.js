@@ -45,7 +45,7 @@ var flightSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    flightDuration: {
+    duration: {
         type: Number,
         required: true
     }
