@@ -15,4 +15,8 @@ api.post('/flight', middleware.signedInOnly, flightApiPost);
 api.put('/flight/:id', middleware.signedInOnly, flightApiPut);
 api.delete('/flight/:id', middleware.signedInOnly, flightApiDelete);
 
+
+var flightInfoApiPost = require('./flightApi/flight-info');
+api.post('/flight-info', middleware.signedInOnly, flightInfoApiPost);
+
 module.exports = api;

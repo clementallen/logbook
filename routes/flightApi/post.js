@@ -9,28 +9,35 @@ var Flight = require('../../models/Flight');
 
 function saveFlight(flightData) {
     console.log(flightData);
+
+    var flight = new Flight();
+
+    flight.pilot = flightData.headers[2].value;
+    flight.registration = flightData.headers[4].value;
+
+    console.log(flight);
+
+    flight.save(function(err, flight) {
+        return flight;
+    });
 }
 
 api.route('/flight')
 
     .post(function(req, res) {
-
+        var fields = [];
         var form = new formidable.IncomingForm();
 
         form.uploadDir = path.join(__dirname, '../../flights');
 
-        form.on('file', function(field, file) {
-            this.fileName = file.name;
-            fs.rename(file.path, path.join(form.uploadDir, file.name));
+        form.on('field', function (field, value) {
+            console.log(field);
+            console.log(value);
+            fields[field] = value;
+        });
 
-            fs.readFile(form.uploadDir + '/' + file.name, 'utf8', function(err, data) {
-                if(err) {
-                    return console.log(err);
-                }
-                var igcData = parseIGC(data);
-                
-                saveFlight(igcData);
-            });
+        form.on('file', function(field, file) {
+            fs.rename(file.path, path.join(form.uploadDir, file.name));
         });
 
         form.on('error', function(err) {
@@ -38,6 +45,7 @@ api.route('/flight')
         });
 
         form.on('end', function() {
+            console.log(fields);
             res.end('success');
         });
 
