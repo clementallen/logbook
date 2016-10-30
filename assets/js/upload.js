@@ -10,11 +10,11 @@ function formatTask(taskArray) {
         var tp = taskArray[i].substring(17);
 
         if(tp.match(/\d+/g) === null && tp.trim() !== '') {
-            formattedTask += tp + '-';
+            formattedTask += tp + ' - ';
         }
     }
 
-    return formattedTask.slice(0, -1);
+    return formattedTask.slice(0, -3);
 }
 
 function populateForm(data) {
@@ -82,6 +82,16 @@ $('#add-flight-form').submit(function(e) {
         var formData = new FormData(form);
 
         formData.append('upload[]', files[0], files[0].name);
+
+        var date = document.getElementById('date-field').value;
+        var takeoff = document.getElementById('takeoff-time-field').value;
+        var landing = document.getElementById('landing-time-field').value;
+
+        var takeoffTimestamp = new Date(date + ' ' + takeoff).getTime();
+        var landingTimestamp = new Date(date + ' ' + landing).getTime();
+
+        formData.append('takeoffTimestamp', takeoffTimestamp);
+        formData.append('landingTimestamp', landingTimestamp);
 
         $.ajax({
           url: '/api/flight',

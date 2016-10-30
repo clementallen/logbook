@@ -22,16 +22,28 @@ function saveFlight(flightData) {
 
     flight.pilot = flightData.pilot;
     flight.registration = flightData.registration;
+    flight.date = new Date(flightData.date);
+    flight.distance = flightData.distance;
+    flight.task = flightData.task;
+    flight.comment = flightData.comment;
+    flight.fileName = flightData.fileName;
+    flight.takeoffLocation = flightData.takeoffLocation;
+    flight.landingLocation = flightData.landingLocation;
+
+    flight.takeoffTime = flightData.takeoffTimestamp;
+    flight.landingTime = flightData.landingTimestamp;
+    flight.flightDuration = (flightData.landingTimestamp- flightData.takeoffTimestamp) / 1000;
 
     flight.save(function(err, flight) {
-        return flight;
+        console.log(err);
+        console.log(flight);
     });
 }
 
 api.route('/flight')
 
     .post(function(req, res) {
-        var fields = [];
+        var fields = {};
         var fileName;
         var filePath;
         var form = new formidable.IncomingForm();
@@ -45,6 +57,7 @@ api.route('/flight')
         form.on('file', function(field, file) {
             fileName = file.name;
             filePath = path.join(form.uploadDir, file.name);
+            fields.fileName = fileName;
             fs.rename(file.path, filePath);
         });
 
@@ -69,13 +82,12 @@ api.route('/flight')
             });
 
             uploader.on('end', function() {
-
                 fs.unlink(filePath, function() {
                     res.json({
                         success: true
                     });
                 });
-
+                saveFlight(fields);
             });
         });
 

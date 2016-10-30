@@ -28,8 +28,12 @@ a:hover {
     margin-top: 10px;
 }
 
-#add-flight-form {
-    padding: 15px;
+.form-container {
+    padding: 20px;
+
+    h2 {
+        margin-top: 0;
+    }
 }
 
 

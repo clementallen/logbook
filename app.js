@@ -23,6 +23,7 @@ var config = require('./config/config');
 // Init the express app
 var app = express();
 
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/logbook');
 
 // view engine setup
