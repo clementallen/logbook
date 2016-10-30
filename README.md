@@ -9,6 +9,7 @@
 * Install [MongoDB](https://www.mongodb.org/downloads)
 * Install [GulpJS](http://gulpjs.com/)
 * Checkout the repository to your computer
+* Copy `config/sample.config.js` to `config/config.js` and populate any required fields
 * Run `npm install` within the repo directory
 * Run `gulp deploy` to build the static assets
 * Run `node bin/www` to start the server
