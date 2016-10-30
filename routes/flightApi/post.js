@@ -6,16 +6,22 @@ var formidable = require('formidable');
 var path = require('path');
 var parseIGC = require('../../modules/igcParser.js');
 var Flight = require('../../models/Flight');
+var config = require('../../config/config');
+var s3 = require('s3');
+
+var client = s3.createClient({
+    s3Options: {
+        accessKeyId: config.aws.accessKey,
+        secretAccessKey: config.aws.secretKey,
+    },
+});
 
 function saveFlight(flightData) {
-    console.log(flightData);
 
     var flight = new Flight();
 
-    flight.pilot = flightData.headers[2].value;
-    flight.registration = flightData.headers[4].value;
-
-    console.log(flight);
+    flight.pilot = flightData.pilot;
+    flight.registration = flightData.registration;
 
     flight.save(function(err, flight) {
         return flight;
@@ -26,18 +32,20 @@ api.route('/flight')
 
     .post(function(req, res) {
         var fields = [];
+        var fileName;
+        var filePath;
         var form = new formidable.IncomingForm();
 
         form.uploadDir = path.join(__dirname, '../../flights');
 
-        form.on('field', function (field, value) {
-            console.log(field);
-            console.log(value);
+        form.on('field', function(field, value) {
             fields[field] = value;
         });
 
         form.on('file', function(field, file) {
-            fs.rename(file.path, path.join(form.uploadDir, file.name));
+            fileName = file.name;
+            filePath = path.join(form.uploadDir, file.name);
+            fs.rename(file.path, filePath);
         });
 
         form.on('error', function(err) {
@@ -45,8 +53,30 @@ api.route('/flight')
         });
 
         form.on('end', function() {
-            console.log(fields);
-            res.end('success');
+            var params = {
+                localFile: filePath,
+
+                s3Params: {
+                    Bucket: 'clementallen',
+                    Key: 'logbook/flights/' + fileName,
+                },
+            };
+
+            var uploader = client.uploadFile(params);
+
+            uploader.on('error', function(err) {
+                console.error('unable to upload:', err.stack);
+            });
+
+            uploader.on('end', function() {
+
+                fs.unlink(filePath, function() {
+                    res.json({
+                        success: true
+                    });
+                });
+
+            });
         });
 
         form.parse(req);

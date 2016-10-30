@@ -22,10 +22,14 @@ a:hover {
 }
 
 #add-flight-error,
-#edit-flight-error {
+#add-flight-success {
     display: none;
     margin-bottom: 0;
     margin-top: 10px;
+}
+
+#add-flight-form {
+    padding: 15px;
 }
 
 

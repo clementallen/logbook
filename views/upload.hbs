@@ -1,0 +1,70 @@
+<div class="container">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-default">
+
+            <form enctype="multipart/form-data" action="" id="add-flight-form">
+
+                    <label class="control-label" for="file-upload">Trace</label>
+                    <input id="file-upload" type="file" name="upload[]" accept=".igc" required/>
+
+                    <div class="form-group">
+                        <label class="control-label" for="pilot-field">Pilot's Name</label>
+                        <input class="form-control" id="pilot-field" type="text" name="pilot" disabled required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="reg-field">Glider Registration</label>
+                        <input class="form-control" id="reg-field" type="text" name="registration" disabled required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="date-field">Flight Date</label>
+                        <input class="form-control" id="date-field" type="date" name="date" disabled required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="takeoff-time-field">Takeoff Time</label>
+                        <input class="form-control" id="takeoff-time-field" type="time" name="takeoff-time" disabled required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="landing-time-field">Landing Time</label>
+                        <input class="form-control" id="landing-time-field" type="time" name="landing-time" disabled required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="takeoff-location-field">Takeoff Location</label>
+                        <input class="form-control" id="takeoff-location-field" type="text" name="takeoff-location" disabled required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="landing-location-field">Landing Location</label>
+                        <input class="form-control" id="landing-location-field" type="text" name="landing-location" disabled required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="distance-field">OLC Distance (km)</label>
+                        <input class="form-control" id="distance-field" type="text" name="distance" disabled required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="task-field">Task</label>
+                        <input class="form-control" id="task-field" type="text" name="task" disabled required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="comments-field">Comments</label>
+                        <textarea class="form-control" rows="3" id="comments-field" name="comments" disabled required></textarea>
+                    </div>
+
+                    <div id="add-flight-error" class="alert alert-danger"></div>
+                    <div id="add-flight-success" class="alert alert-success">Flight upload complete</div>
+
+                    <input id="add-flight" type="submit" value="Upload" class="btn btn-primary btn-raised" />
+                    <input type="reset" value="Clear" class="btn btn-default btn-raised" />
+
+            </form>
+
+        </div>
+    </div>
+</div>

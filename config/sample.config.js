@@ -4,7 +4,7 @@ var config = {
     },
     aws: {
         accessKey: '',
-        secret: ''
+        secretKey: ''
     },
     tempMessage: 'temporary homepage message'
 };

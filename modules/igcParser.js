@@ -64,10 +64,7 @@ function extractFlightTimings(igcFile) {
     // Date is recorded as: LCMU::TKOFFLAND:takeoff, landing in the format (yyyymmddhhmmss)
     var flightTimingsString = igcFile.match(/TKOFFLAND:1,([\d]{14}),([\d]{14})/);
 
-    var flightTimings = {
-        takeoff: null,
-        landing: null
-    };
+    var flightTimings = null;
 
     if(flightTimingsString !== null) {
         return {
