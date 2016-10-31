@@ -27,7 +27,8 @@ var flightSchema = new mongoose.Schema({
     },
     fileName: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     takeoffLocation: {
         type: String,
