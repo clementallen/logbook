@@ -93,6 +93,9 @@ $('#add-flight-form').submit(function(e) {
         formData.append('takeoffTimestamp', takeoffTimestamp);
         formData.append('landingTimestamp', landingTimestamp);
 
+        $('#add-flight-error').hide();
+        $('#add-flight-success').text('Uploading...').show();
+
         $.ajax({
           url: '/api/flight',
           type: 'POST',
@@ -100,7 +103,12 @@ $('#add-flight-form').submit(function(e) {
           processData: false,
           contentType: false,
           success: function(data) {
-              $('#add-flight-success').show();
+              $('#add-flight-error').hide();
+              $('#add-flight-success').text('Flight upload complete').show();
+          },
+          error: function(err) {
+              $('#add-flight-success').hide();
+              $('#add-flight-error').text(JSON.stringify(err)).show();
           }
         });
     }
