@@ -116,25 +116,19 @@ api.route('/flight')
 
     .post(function(req, res) {
         saveTraceLocally(req, res, function(err, req, res) {
-            if(err) {
-                handleError(err, req, res);
-            } else {
-                uploadToS3(req, res, function(err, req, res) {
-                    if(err) {
-                        handleError(err, req, res);
-                    } else {
-                        saveFlight(req, res, function(err, req, res) {
-                            if(err) {
-                                handleError(err, req, res);
-                            } else {
-                                res.json({
-                                    success: true
-                                });
-                            }
-                        });
-                    }
+            if(err) return handleError(err, req, res);
+
+            uploadToS3(req, res, function(err, req, res) {
+                if(err) return handleError(err, req, res);
+
+                saveFlight(req, res, function(err, req, res) {
+                    if(err) return handleError(err, req, res);
+
+                    res.json({
+                        success: true
+                    });
                 });
-            }
+            });
         });
     });
 
