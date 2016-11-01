@@ -1,11 +1,14 @@
-function renderFlight(flight) {
+function renderFlight(template, flight) {
+    flight.date = formatDate(flight.date);
+    flight.duration = formatDuration(flight.duration);
+    flight.takeoffTime = formatTime(flight.takeoffTime);
+    flight.landingTime = formatTime(flight.landingTime);
+    $('.logbook-container').append(Mustache.render(template, flight));
+}
+
+function getTemplate(callback) {
     $.get('/templates/flight.html', function(template) {
-        template = $(template).filter('#flight-template').html();
-        flight.date = formatDate(flight.date);
-        flight.duration = formatDuration(flight.duration);
-        flight.takeoffTime = formatTime(flight.takeoffTime);
-        flight.landingTime = formatTime(flight.landingTime);
-        $('.logbook-container').append(Mustache.render(template, flight));
+        callback($(template).filter('#flight-template').html());
     });
 }
 
@@ -31,9 +34,10 @@ function getFlights() {
     $.ajax({
         url: '/api/flights',
         success: function(flights) {
-            $.each(flights, function(i, flight){
-                console.log(flight);
-                renderFlight(flight);
+            getTemplate(function(template) {
+                $.each(flights, function(i, flight){
+                    renderFlight(template, flight);
+                });
             });
         },
         error: function(error) {

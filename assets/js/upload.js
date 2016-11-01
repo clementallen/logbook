@@ -3,18 +3,29 @@ function timestampToTime(timestamp) {
     return date.toISOString().slice(11, 16);
 }
 
-function formatTask(taskArray) {
+function formatTask(taskArray, callback) {
     var formattedTask = '';
 
-    for(var i = 0; i < taskArray.length; i++) {
-        var tp = taskArray[i].substring(17);
+    getTurnpoints(function(turnpoints) {
+        for(var i = 0; i < taskArray.length; i++) {
+            var tp = taskArray[i].substring(17);
 
-        if(tp.match(/\d+/g) === null && tp.trim() !== '') {
-            formattedTask += tp + ' - ';
+            if(turnpoints.hasOwnProperty(tp)) {
+                tp = turnpoints[tp];
+            }
+
+            if(tp.match(/\d+/g) === null && tp.trim() !== '') {
+                formattedTask += tp + ' - ';
+            }
         }
-    }
+        callback(formattedTask.slice(0, -3));
+    });
+}
 
-    return formattedTask.slice(0, -3);
+function getTurnpoints(callback) {
+    $.get('/api/turnpoints', function(data) {
+        callback(data);
+    });
 }
 
 function populateForm(data) {
@@ -35,7 +46,10 @@ function populateForm(data) {
     }
 
     if(data.taskpoints.length > 0) {
-        form.find('#task-field').val(formatTask(data.taskpoints));
+        formatTask(data.taskpoints, function(formattedTask) {
+            console.log(formattedTask);
+            form.find('#task-field').val(formattedTask);
+        });
     } else {
         form.find('#task-field').val('');
     }
