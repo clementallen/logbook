@@ -3,7 +3,7 @@ function renderFlight(template, flight) {
     flight.duration = formatDuration(flight.duration);
     flight.takeoffTime = formatTime(flight.takeoffTime);
     flight.landingTime = formatTime(flight.landingTime);
-    $('.logbook-container').append(Mustache.render(template, flight));
+    $('.logbook-entries').append(Mustache.render(template, flight));
 }
 
 function getTemplate(callback) {
@@ -38,6 +38,7 @@ function getFlights() {
                 $.each(flights, function(i, flight){
                     renderFlight(template, flight);
                 });
+                $('.logbook-table').fadeIn();
             });
         },
         error: function(error) {

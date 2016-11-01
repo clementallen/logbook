@@ -1,0 +1,78 @@
+.logbook-table {
+    display: none;
+}
+
+.logbook-container {
+    margin: 20px;
+}
+
+@media (max-width: 1050px) {
+    .table tbody > tr > td {
+        padding-bottom: 10px;
+        padding-left: 30%;
+    }
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr {
+        border: 1px solid #ccc;
+    }
+
+    td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+
+        &:before {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            width: 20%;
+            padding-right: 10px;
+            white-space: nowrap;
+            font-weight: bold;
+        }
+
+        &:nth-of-type(1):before {
+            content: 'Date';
+        }
+        &:nth-of-type(2):before {
+            content: 'Pilot';
+        }
+        &:nth-of-type(3):before {
+            content: 'From';
+        }
+        &:nth-of-type(4):before {
+            content: 'To';
+        }
+        &:nth-of-type(5):before {
+            content: 'Task';
+        }
+        &:nth-of-type(6):before {
+            content: 'T/O';
+        }
+        &:nth-of-type(7):before {
+            content: 'Landing';
+        }
+        &:nth-of-type(8):before {
+            content: 'Duration';
+        }
+        &:nth-of-type(9):before {
+            content: 'Km';
+        }
+        &:nth-of-type(10):before {
+            content: 'Comment';
+        }
+        &:nth-of-type(11):before {
+            content: 'Trace';
+        }
+    }
+}

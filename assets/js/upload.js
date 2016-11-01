@@ -50,7 +50,7 @@ function populateForm(data) {
             form.find('#task-field').val(formattedTask);
         });
     } else {
-        form.find('#task-field').val('');
+        form.find('#task-field').val('Local');
     }
 
     form.find('input, textarea').prop('disabled', false);
@@ -118,6 +118,7 @@ $('#add-flight-form').submit(function(e) {
           success: function(data) {
               $('#add-flight-error').hide();
               $('#add-flight-success').text('Flight upload complete').show();
+              document.getElementById('add-flight-form').reset();
           },
           error: function(err) {
               $('#add-flight-success').hide();

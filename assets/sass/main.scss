@@ -21,20 +21,6 @@ a:hover {
     padding: 0;
 }
 
-#add-flight-error,
-#add-flight-success {
-    display: none;
-    margin-bottom: 0;
-    margin-top: 10px;
-}
-
-.form-container {
-    padding: 20px;
-
-    h2 {
-        margin-top: 0;
-    }
-}
-
-
 @import 'partials/messaging';
+@import 'partials/logbook';
+@import 'partials/upload';

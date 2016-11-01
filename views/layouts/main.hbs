@@ -49,18 +49,16 @@
         </div>
     </nav>
 
-    <div class="container">
-        {{#if message}}
-            <div class="message-alert-container">
-                <div class="alert alert-dismissible alert-danger message-alert">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <p>{{message}}</p>
-                </div>
+    {{#if message}}
+        <div class="message-alert-container">
+            <div class="alert alert-dismissible alert-danger message-alert">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <p>{{message}}</p>
             </div>
-        {{/if}}
+        </div>
+    {{/if}}
 
-        {{{body}}}
-    </div>
+    {{{body}}}
 
     <script src="/js/vendor.min.js"></script>
     <script src="/js/main.min.js"></script>
