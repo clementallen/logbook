@@ -8,7 +8,7 @@ function formatTask(taskArray, callback) {
 
     getTurnpoints(function(turnpoints) {
         for(var i = 0; i < taskArray.length; i++) {
-            var tp = taskArray[i].substring(17);
+            var tp = taskArray[i].substring(17).toLowerCase();
 
             if(turnpoints.hasOwnProperty(tp)) {
                 tp = turnpoints[tp];
@@ -47,7 +47,6 @@ function populateForm(data) {
 
     if(data.taskpoints.length > 0) {
         formatTask(data.taskpoints, function(formattedTask) {
-            console.log(formattedTask);
             form.find('#task-field').val(formattedTask);
         });
     } else {
