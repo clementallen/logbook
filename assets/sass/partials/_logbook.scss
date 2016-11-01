@@ -8,7 +8,6 @@
 
 @media (max-width: 1050px) {
     .table tbody > tr > td {
-        padding-bottom: 10px;
         padding-left: 30%;
     }
 
@@ -28,15 +27,13 @@
 
     td {
         border: none;
-        border-bottom: 1px solid #eee;
         position: relative;
 
         &:before {
             position: absolute;
-            top: 6px;
+            top: 8px;
             left: 6px;
             width: 20%;
-            padding-right: 10px;
             white-space: nowrap;
             font-weight: bold;
         }
