@@ -1,5 +1,9 @@
 .logbook-table {
     display: none;
+
+    td {
+        border-right: 1px solid lightgray;
+    }
 }
 
 .logbook-container {
