@@ -69,7 +69,7 @@ function extractFlightTimings(igcFile) {
     if(flightTimingsString !== null) {
         return {
             takeoff: dateToTimestamp(flightTimingsString[1]),
-            landing: dateToTimestamp(flightTimingsString[2])
+            landing: dateToTimestamp(flightTimingsString[2]) - 600
         };
     } else {
         return flightTimings;
