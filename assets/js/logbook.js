@@ -6,9 +6,15 @@ function renderFlight(template, flight) {
     $('#' + flight.year + ' .logbook-entries').append(Mustache.render(template, flight));
 }
 
-function getTemplate(callback) {
-    $.get('/templates/flight.html', function(template) {
-        callback($(template).filter('#flight-template').html());
+function renderStats(template, stats) {
+    stats.totalDuration = formatDuration(stats.totalDuration);
+    stats.averageDuration = formatDuration(stats.averageDuration);
+    $('.stat-entries').append(Mustache.render(template, stats));
+}
+
+function getTemplate(name, callback) {
+    $.get('/templates/' + name + '.html', function(template) {
+        callback($(template).filter('#' + name + '-template').html());
     });
 }
 
@@ -17,24 +23,22 @@ function formatDate(date) {
 }
 
 function formatDuration(d) {
-    d = Number(d);
-    var h = Math.floor(d / 3600);
-    var m = Math.floor(d % 3600 / 60);
-
-    return h + ':' + m;
+    var date = new Date(null);
+    date.setSeconds(d);
+    return date.toISOString().substr(11, 5);
 }
 
 function formatTime(timestamp) {
     var date = new Date(timestamp);
 
-    return date.getHours() + ':' + date.getMinutes();
+    return date.toISOString().substr(11, 5);
 }
 
 function getFlights() {
     $.ajax({
         url: '/api/flights',
         success: function(flights) {
-            getTemplate(function(template) {
+            getTemplate('flight', function(template) {
                 $.each(flights, function(i, flight){
                     renderFlight(template, flight);
                 });
@@ -47,4 +51,22 @@ function getFlights() {
     });
 }
 
+function getStats() {
+    $.ajax({
+        url: '/api/stats',
+        success: function(stats) {
+            getTemplate('stat', function(template) {
+                $.each(stats[0].pilots, function(i, stats) {
+                    renderStats(template, stats);
+                });
+            });
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+
 getFlights();
+
+getStats();

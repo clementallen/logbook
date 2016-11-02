@@ -1,15 +1,29 @@
 <div class="logbook-container">
 
       <ul class="nav nav-tabs" role="tablist" id="logbook-tablist">
-        <li role="presentation" class="active"><a href="#stats" aria-controls="stats" role="tab" data-toggle="tab">Stats</a></li>
+        <li role="presentation"><a href="#stats" aria-controls="stats" role="tab" data-toggle="tab">Stats</a></li>
         <li role="presentation"><a href="#2014" aria-controls="2014" role="tab" data-toggle="tab">2014</a></li>
         <li role="presentation"><a href="#2015" aria-controls="2015" role="tab" data-toggle="tab">2015</a></li>
-        <li role="presentation"><a href="#2016" aria-controls="2016" role="tab" data-toggle="tab">2016</a></li>
+        <li role="presentation" class="active"><a href="#2016" aria-controls="2016" role="tab" data-toggle="tab">2016</a></li>
       </ul>
 
       <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="stats">
-            Stats
+        <div role="tabpanel" class="tab-pane" id="stats">
+            <div class="panel panel-default">
+                <table class="table panel stats-table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Pilot</th>
+                            <th>Total Flights</th>
+                            <th>Hours</th>
+                            <th>Average Duration</th>
+                            <th>Distance</th>
+                            <th>Average Distance</th>
+                        </tr>
+                    </thead>
+                    <tbody class="stat-entries"></tbody>
+                </table>
+            </div>
         </div>
 
         <div role="tabpanel" class="tab-pane" id="2014">
@@ -54,7 +68,7 @@
             </table>
         </div>
 
-        <div role="tabpanel" class="tab-pane" id="2016">
+        <div role="tabpanel" class="tab-pane active" id="2016">
             <table class="table panel logbook-table table-striped">
                 <thead>
                     <tr>
