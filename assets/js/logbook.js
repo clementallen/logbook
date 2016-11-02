@@ -13,6 +13,14 @@ function renderStats(template, stats) {
     $('.stat-entries').append(Mustache.render(template, stats));
 }
 
+function renderAnnualStats(year, template, stats) {
+    console.log(year, stats);
+    stats.totalDuration = formatDuration(stats.totalDuration);
+    stats.averageDuration = formatDuration(stats.averageDuration);
+    stats.averageDistance = Math.round(stats.averageDistance);
+    $('#' + year + ' .annual-stat-entries').append(Mustache.render(template, stats));
+}
+
 function getTemplate(name, callback) {
     $.get('/templates/' + name + '.html', function(template) {
         callback($(template).filter('#' + name + '-template').html());
@@ -68,6 +76,29 @@ function getStats() {
     });
 }
 
+function getAnnualStats() {
+    var years = [2014, 2015, 2016];
+
+    getTemplate('stat', function(template) {
+        $.each(years, function(i, stats) {
+            var currentYear = years[i];
+            $.ajax({
+                url: '/api/stats/' + currentYear,
+                success: function(stats) {
+                    $.each(stats[0].pilots, function(i, stats) {
+                        renderAnnualStats(currentYear, template, stats);
+                    });
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+}
+
 getFlights();
+
+getAnnualStats();
 
 getStats();
