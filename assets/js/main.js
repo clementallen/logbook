@@ -5,7 +5,11 @@ $('#logbook-tablist a').on('click', function(e) {
 
 function loadPageFromHash() {
     var hash = window.location.hash.substring(1);
-    $('#logbook-tablist a[aria-controls=' + hash + ']').click();
+    if(hash === '') {
+        $('#logbook-tablist a[aria-controls="2016"]').click();
+    } else {
+        $('#logbook-tablist a[aria-controls=' + hash + ']').click();
+    }
 }
 
 //shows page depending on url

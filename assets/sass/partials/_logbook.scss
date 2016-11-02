@@ -7,13 +7,11 @@ td {
     margin: 20px;
 
     .logbook-table,
-    .stats-table,
-    .annual-stats-table {
+    .stats-table {
         display: none;
     }
 
-    .stat-entries,
-    .annual-stat-entries {
+    .stat-entries {
         tr:last-child {
             font-weight: bold;
         }
@@ -96,8 +94,7 @@ td {
             }
         }
 
-        .stats-table &,
-        .annual-stats-table & {
+        .stats-table & {
             &:nth-of-type(1):before {
                 content: 'Pilot';
             }

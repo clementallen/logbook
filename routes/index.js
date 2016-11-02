@@ -4,10 +4,11 @@ var config = require('../config/config');
 
 router.get('/', (req, res, next) => {
     res.render('logbook', {
-        title: 'Logbook',
+        title: 'HCV Logbook',
         signedIn: req.isAuthenticated(),
         message: req.flash('message'),
-        tempMessage: config.tempMessage
+        tempMessage: config.tempMessage,
+        years: [2014, 2015, 2016]
     });
 });
 

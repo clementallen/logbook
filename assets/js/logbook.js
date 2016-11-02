@@ -6,24 +6,20 @@ function renderFlight(template, flight) {
     $('#' + flight.year + ' .logbook-entries').append(Mustache.render(template, flight));
 }
 
-function renderStats(template, stats) {
-    if(!stats.pilot) {
-        stats.pilot = 'Total';
-    }
+function renderStats(template, stats, year) {
     stats.totalDuration = formatDuration(stats.totalDuration);
     stats.averageDuration = formatDuration(stats.averageDuration);
     stats.averageDistance = Math.round(stats.averageDistance);
-    $('.stat-entries').append(Mustache.render(template, stats));
-}
 
-function renderAnnualStats(year, template, stats) {
     if(!stats.pilot) {
         stats.pilot = 'Total';
     }
-    stats.totalDuration = formatDuration(stats.totalDuration);
-    stats.averageDuration = formatDuration(stats.averageDuration);
-    stats.averageDistance = Math.round(stats.averageDistance);
-    $('#' + year + ' .annual-stat-entries').append(Mustache.render(template, stats));
+
+    if(year) {
+        $('#' + year + ' .stat-entries').append(Mustache.render(template, stats));
+    } else {
+        $('.stat-entries').append(Mustache.render(template, stats));
+    }
 }
 
 function getTemplate(name, callback) {
@@ -36,9 +32,10 @@ function formatDate(date) {
     return dateFormat(date, 'dS mmm');
 }
 
-function formatDuration(d) {
+function formatDuration(seconds) {
     var date = new Date(null);
-    date.setSeconds(d);
+    date.setSeconds(seconds);
+
     return date.toISOString().substr(11, 5);
 }
 
@@ -93,10 +90,10 @@ function getAnnualStats() {
                 url: '/api/stats/' + currentYear,
                 success: function(stats) {
                     $.each(stats[0].pilots, function(i, stats) {
-                        renderAnnualStats(currentYear, template, stats);
+                        renderStats(template, stats, currentYear);
                     });
-                    renderAnnualStats(currentYear, template, stats[0]);
-                    $('.annual-stats-table').fadeIn();
+                    renderStats(template, stats[0], currentYear);
+                    $('#' + currentYear + ' .stats-table').fadeIn();
                 },
                 error: function(error) {
                     console.log(error);

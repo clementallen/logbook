@@ -2,135 +2,24 @@
 
     <ul class="nav nav-tabs" role="tablist" id="logbook-tablist">
         <li role="presentation"><a href="#stats" aria-controls="Stats" role="tab" data-toggle="tab">Stats</a></li>
-        <li role="presentation"><a href="#2014" aria-controls="2014" role="tab" data-toggle="tab">2014</a></li>
-        <li role="presentation"><a href="#2015" aria-controls="2015" role="tab" data-toggle="tab">2015</a></li>
-        <li role="presentation" class="active"><a href="#2016" aria-controls="2016" role="tab" data-toggle="tab">2016</a></li>
+        {{#each years}}
+            <li role="presentation"><a href="#{{this}}" aria-controls="{{this}}" role="tab" data-toggle="tab">{{this}}</a></li>
+        {{/each}}
     </ul>
 
-      <div class="tab-content">
+    <div class="tab-content">
+
         <div role="tabpanel" class="tab-pane" id="stats">
-            <div class="panel panel-default">
-                <table class="table panel stats-table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Pilot</th>
-                            <th>Total Flights</th>
-                            <th>Hours</th>
-                            <th>Average Duration</th>
-                            <th>Distance</th>
-                            <th>Average Distance</th>
-                        </tr>
-                    </thead>
-                    <tbody class="stat-entries"></tbody>
-                </table>
+            {{>stats}}
+        </div>
+
+        {{#each years}}
+            <div role="tabpanel" class="tab-pane" id="{{this}}">
+                {{>log}}
+                {{>stats}}
             </div>
-        </div>
+        {{/each}}
 
-        <div role="tabpanel" class="tab-pane" id="2014">
-            <table class="table panel logbook-table table-striped">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Pilot</th>
-                        <th>From</th>
-                        <th>To</th>
-                        <th style="min-width: 150px;">Task</th>
-                        <th>T/O</th>
-                        <th>Landing</th>
-                        <th>Duration</th>
-                        <th>Distance</th>
-                        <th style="min-width: 300px;">Comment</th>
-                        <th>Trace</th>
-                    </tr>
-                </thead>
-                <tbody class="logbook-entries"></tbody>
-            </table>
-
-            <table class="table panel annual-stats-table table-striped">
-                <thead>
-                    <tr>
-                        <th>Pilot</th>
-                        <th>Total Flights</th>
-                        <th>Hours</th>
-                        <th>Average Duration</th>
-                        <th>Distance</th>
-                        <th>Average Distance</th>
-                    </tr>
-                </thead>
-                <tbody class="annual-stat-entries"></tbody>
-            </table>
-        </div>
-
-        <div role="tabpanel" class="tab-pane" id="2015">
-            <table class="table panel logbook-table table-striped">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Pilot</th>
-                        <th>From</th>
-                        <th>To</th>
-                        <th style="min-width: 150px;">Task</th>
-                        <th>T/O</th>
-                        <th>Landing</th>
-                        <th>Duration</th>
-                        <th>Distance</th>
-                        <th style="min-width: 300px;">Comment</th>
-                        <th>Trace</th>
-                    </tr>
-                </thead>
-                <tbody class="logbook-entries"></tbody>
-            </table>
-
-            <table class="table panel annual-stats-table table-striped">
-                <thead>
-                    <tr>
-                        <th>Pilot</th>
-                        <th>Total Flights</th>
-                        <th>Hours</th>
-                        <th>Average Duration</th>
-                        <th>Distance</th>
-                        <th>Average Distance</th>
-                    </tr>
-                </thead>
-                <tbody class="annual-stat-entries"></tbody>
-            </table>
-        </div>
-
-        <div role="tabpanel" class="tab-pane active" id="2016">
-            <table class="table panel logbook-table table-striped">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Pilot</th>
-                        <th>From</th>
-                        <th>To</th>
-                        <th style="min-width: 150px;">Task</th>
-                        <th>T/O</th>
-                        <th>Landing</th>
-                        <th>Duration</th>
-                        <th>Distance</th>
-                        <th style="min-width: 300px;">Comment</th>
-                        <th>Trace</th>
-                    </tr>
-                </thead>
-                <tbody class="logbook-entries"></tbody>
-            </table>
-
-            <table class="table panel annual-stats-table table-striped">
-                <thead>
-                    <tr>
-                        <th>Pilot</th>
-                        <th>Total Flights</th>
-                        <th>Hours</th>
-                        <th>Average Duration</th>
-                        <th>Distance</th>
-                        <th>Average Distance</th>
-                    </tr>
-                </thead>
-                <tbody class="annual-stat-entries"></tbody>
-            </table>
-        </div>
-      </div>
-
+    </div>
 
 </div>
