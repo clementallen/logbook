@@ -6,12 +6,25 @@
 
             <form enctype="multipart/form-data" action="" id="add-flight-form">
 
-                    <label class="control-label" for="file-upload">Trace</label>
-                    <input id="file-upload" type="file" name="upload[]" accept=".igc" required/>
+                    <div class="form-group">
+                        <label class="control-label" for="file-upload">Trace</label>
+                        <input type="text" readonly="" class="form-control" placeholder="Select file...">
+                        <input id="file-upload" type="file" name="upload[]" accept=".igc" required/>
+                    </div>
 
                     <div class="form-group">
                         <label class="control-label" for="pilot-field">Pilot's Name</label>
-                        <input class="form-control" id="pilot-field" type="text" name="pilot" disabled required pattern=".*\S+.*" title="Must contain more than empty spaces"/>
+                        <select id="pilot-field" class="form-control" disabled required>
+                            <option></option>
+                            <option>Robin May</option>
+                            <option>Dan Chilcot</option>
+                            <option>Clement Allen</option>
+                            <option>Emily Tillett</option>
+                            <option>Sammy Venables</option>
+                            <option>Ryan Berry</option>
+                            <option>Laurence Allen</option>
+                            <option>Nathan Hampson-Jones</option>
+                        </select>
                     </div>
 
                     <div class="form-group">

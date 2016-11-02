@@ -53,7 +53,7 @@ function populateForm(data) {
         form.find('#task-field').val('Local');
     }
 
-    form.find('input, textarea').prop('disabled', false);
+    form.find('input, textarea, select').prop('disabled', false);
 }
 
 $('#file-upload').on('change', function(e) {
