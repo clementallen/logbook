@@ -88,7 +88,8 @@ td {
             }
         }
 
-        .stats-table & {
+        .stats-table &,
+        .annual-stats-table & {
             &:nth-of-type(1):before {
                 content: 'Pilot';
             }
