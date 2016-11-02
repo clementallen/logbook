@@ -106,6 +106,8 @@ $('#add-flight-form').submit(function(e) {
         formData.append('takeoffTimestamp', takeoffTimestamp);
         formData.append('landingTimestamp', landingTimestamp);
 
+        formData.append('pilot', $('#pilot-field option:selected').val());
+
         $('#add-flight-error').hide();
         $('#add-flight-success').text('Uploading...').show();
 
