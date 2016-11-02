@@ -9,6 +9,7 @@ function renderFlight(template, flight) {
 function renderStats(template, stats) {
     stats.totalDuration = formatDuration(stats.totalDuration);
     stats.averageDuration = formatDuration(stats.averageDuration);
+    stats.averageDistance = Math.round(stats.averageDistance);
     $('.stat-entries').append(Mustache.render(template, stats));
 }
 
