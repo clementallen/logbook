@@ -24,6 +24,7 @@ function saveFlight(req, res, next) {
     flight.pilot = flightData.pilot;
     flight.registration = flightData.registration;
     flight.date = new Date(flightData.date);
+    flight.year = new Date(flightData.date).getFullYear();
     flight.distance = flightData.distance;
     flight.task = flightData.task;
     flight.comment = flightData.comment;

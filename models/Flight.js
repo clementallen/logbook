@@ -13,6 +13,10 @@ var flightSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
+    year: {
+        type: Number,
+        required: true
+    },
     distance: {
         type: Number,
         required: true

@@ -22,4 +22,7 @@ api.post('/flight-info', middleware.signedInOnly, flightInfoApiPost);
 var turnpointsApiGet = require('./api/turnpoints');
 api.get('/turnpoints', turnpointsApiGet);
 
+var statsApiGet = require('./api/stats');
+api.get('/flights/stats', statsApiGet);
+
 module.exports = api;
