@@ -8,6 +8,14 @@
 
 .logbook-container {
     margin: 20px;
+
+    #logbook-tablist {
+        margin-bottom: 15px;
+        
+         li.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    }
 }
 
 @media (max-width: 1050px) {

@@ -3,12 +3,12 @@ var api = express.Router();
 var mongoose = require('mongoose');
 var Flight = require('../../models/Flight');
 
-api.route('/flights/stats')
+api.route('/stats/:year?')
 
     .get(function(req, res) {
         var years = [2014, 2015, 2016];
-        if(req.query.year) {
-            var year = parseInt(req.query.year, 10);
+        if(req.params.year) {
+            var year = parseInt(req.params.year, 10);
             years = [year];
         }
 

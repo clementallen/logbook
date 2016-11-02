@@ -23,6 +23,6 @@ var turnpointsApiGet = require('./api/turnpoints');
 api.get('/turnpoints', turnpointsApiGet);
 
 var statsApiGet = require('./api/stats');
-api.get('/flights/stats', statsApiGet);
+api.get('/stats/:year?', statsApiGet);
 
 module.exports = api;

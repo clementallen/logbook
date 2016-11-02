@@ -3,7 +3,7 @@ function renderFlight(template, flight) {
     flight.duration = formatDuration(flight.duration);
     flight.takeoffTime = formatTime(flight.takeoffTime);
     flight.landingTime = formatTime(flight.landingTime);
-    $('.logbook-entries').append(Mustache.render(template, flight));
+    $('#' + flight.year + ' .logbook-entries').append(Mustache.render(template, flight));
 }
 
 function getTemplate(callback) {
