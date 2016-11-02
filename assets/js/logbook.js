@@ -3,13 +3,15 @@ function renderFlight(template, flight) {
     flight.duration = formatDuration(flight.duration);
     flight.takeoffTime = formatTime(flight.takeoffTime);
     flight.landingTime = formatTime(flight.landingTime);
+    flight.distance += ' km';
     $('#' + flight.year + ' .logbook-entries').append(Mustache.render(template, flight));
 }
 
 function renderStats(template, stats, year) {
+    stats.totalDistance += ' km';
     stats.totalDuration = formatDuration(stats.totalDuration);
     stats.averageDuration = formatDuration(stats.averageDuration);
-    stats.averageDistance = Math.round(stats.averageDistance);
+    stats.averageDistance = Math.round(stats.averageDistance) + ' km';
 
     if(!stats.pilot) {
         stats.pilot = 'Total';
@@ -18,7 +20,7 @@ function renderStats(template, stats, year) {
     if(year) {
         $('#' + year + ' .stat-entries').append(Mustache.render(template, stats));
     } else {
-        $('.stat-entries').append(Mustache.render(template, stats));
+        $('#stats .stat-entries').append(Mustache.render(template, stats));
     }
 }
 
