@@ -1,8 +1,3 @@
-.logbook-table,
-.stats-table,
-.annual-stats-table {
-    display: none;
-}
 
 td {
     border-right: 1px solid lightgray;
@@ -10,6 +5,19 @@ td {
 
 .logbook-container {
     margin: 20px;
+
+    .logbook-table,
+    .stats-table,
+    .annual-stats-table {
+        display: none;
+    }
+
+    .stat-entries,
+    .annual-stat-entries {
+        tr:last-child {
+            font-weight: bold;
+        }
+    }
 
     #logbook-tablist {
         margin-bottom: 15px;

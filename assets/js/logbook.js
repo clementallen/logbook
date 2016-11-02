@@ -7,6 +7,9 @@ function renderFlight(template, flight) {
 }
 
 function renderStats(template, stats) {
+    if(!stats.pilot) {
+        stats.pilot = 'Total';
+    }
     stats.totalDuration = formatDuration(stats.totalDuration);
     stats.averageDuration = formatDuration(stats.averageDuration);
     stats.averageDistance = Math.round(stats.averageDistance);
@@ -14,6 +17,9 @@ function renderStats(template, stats) {
 }
 
 function renderAnnualStats(year, template, stats) {
+    if(!stats.pilot) {
+        stats.pilot = 'Total';
+    }
     stats.totalDuration = formatDuration(stats.totalDuration);
     stats.averageDuration = formatDuration(stats.averageDuration);
     stats.averageDistance = Math.round(stats.averageDistance);
@@ -67,6 +73,7 @@ function getStats() {
                 $.each(stats[0].pilots, function(i, stats) {
                     renderStats(template, stats);
                 });
+                renderStats(template, stats[0]);
                 $('.stats-table').fadeIn();
             });
         },
@@ -88,6 +95,7 @@ function getAnnualStats() {
                     $.each(stats[0].pilots, function(i, stats) {
                         renderAnnualStats(currentYear, template, stats);
                     });
+                    renderAnnualStats(currentYear, template, stats[0]);
                     $('.annual-stats-table').fadeIn();
                 },
                 error: function(error) {
