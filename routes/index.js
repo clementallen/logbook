@@ -3,7 +3,7 @@ var router = express.Router();
 var config = require('../config/config');
 
 router.get('/', (req, res, next) => {
-    res.render('index', {
+    res.render('logbook', {
         title: 'Logbook',
         signedIn: req.isAuthenticated(),
         message: req.flash('message'),

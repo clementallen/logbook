@@ -13,7 +13,6 @@ var MongoStore = require('connect-mongo/es5')(session);
 
 var index = require('./routes/index');
 var account = require('./routes/account');
-var logbook = require('./routes/logbook');
 var upload = require('./routes/upload');
 var api = require('./routes/api');
 
@@ -68,7 +67,6 @@ require('./routes/register')(app, passport);
 require('./routes/signout')(app, passport);
 
 app.use('/account', account);
-app.use('/logbook', logbook);
 app.use('/upload', upload);
 app.use('/api', api);
 
