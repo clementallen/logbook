@@ -1,4 +1,16 @@
-var messageAlert = $('.message-alert');
+$('#logbook-tablist a').on('click', function(e) {
+    e.preventDefault();
+    window.location.hash = $(this).text();
+});
+
+function loadPageFromHash() {
+    var hash = window.location.hash.substring(1);
+    $('#logbook-tablist a[aria-controls=' + hash + ']').click();
+}
+
+//shows page depending on url
+$(document).ready(loadPageFromHash);
+$(window).on('hashchange',loadPageFromHash);
 
 // Highlights active page in navbar
 $('a[href="' + this.location.pathname + '"]').parent().addClass('active');
@@ -7,6 +19,7 @@ $('a[href="' + this.location.pathname + '"]').parent().addClass('active');
 $.material.init();
 
 // If the page has a message
+var messageAlert = $('.message-alert');
 if(messageAlert.length) {
     $('body').append($('<div id="lightbox">'));
     var lightbox = $('#lightbox');

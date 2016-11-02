@@ -14,7 +14,6 @@ function renderStats(template, stats) {
 }
 
 function renderAnnualStats(year, template, stats) {
-    console.log(year, stats);
     stats.totalDuration = formatDuration(stats.totalDuration);
     stats.averageDuration = formatDuration(stats.averageDuration);
     stats.averageDistance = Math.round(stats.averageDistance);
@@ -68,6 +67,7 @@ function getStats() {
                 $.each(stats[0].pilots, function(i, stats) {
                     renderStats(template, stats);
                 });
+                $('.stats-table').fadeIn();
             });
         },
         error: function(error) {
@@ -88,6 +88,7 @@ function getAnnualStats() {
                     $.each(stats[0].pilots, function(i, stats) {
                         renderAnnualStats(currentYear, template, stats);
                     });
+                    $('.annual-stats-table').fadeIn();
                 },
                 error: function(error) {
                     console.log(error);
