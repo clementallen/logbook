@@ -54,10 +54,22 @@ function formatTime(timestamp) {
     return date.toISOString().substr(11, 5);
 }
 
+function compare(a, b) {
+    if (a.date < b.date) {
+        return -1;
+        
+    } else if(a.date > b.date) {
+        return 1;
+    }
+
+    return 0;
+}
+
 function getFlights() {
     $.ajax({
         url: '/api/flights',
         success: function(flights) {
+            flights.sort(compare);
             getTemplate('flight', function(template) {
                 $.each(flights, function(i, flight){
                     renderFlight(template, flight);
