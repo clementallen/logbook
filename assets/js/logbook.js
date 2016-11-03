@@ -69,6 +69,12 @@ function compare(a, b) {
     return 0;
 }
 
+function orderPilots(a, b) {
+    return b.pilot < a.pilot ?  1
+         : b.pilot > a.pilot ? -1
+         : 0;
+}
+
 function getFlights() {
     $.ajax({
         url: '/api/flights',
@@ -92,6 +98,7 @@ function getStats() {
         url: '/api/stats',
         success: function(stats) {
             getTemplate('stat', function(template) {
+                stats[0].pilots.sort(orderPilots);
                 $.each(stats[0].pilots, function(i, stats) {
                     renderStats(template, stats);
                 });
@@ -114,6 +121,7 @@ function getAnnualStats() {
             $.ajax({
                 url: '/api/stats/' + currentYear,
                 success: function(stats) {
+                    stats[0].pilots.sort(orderPilots);
                     $.each(stats[0].pilots, function(i, stats) {
                         renderStats(template, stats, currentYear);
                     });
