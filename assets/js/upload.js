@@ -33,9 +33,15 @@ function populateForm(data) {
     var date = new Date(data.flightDate * 1000);
     var formattedDate = date.toISOString().slice(0,10);
 
-    form.find('#pilot-field').val(data.headers[2].value);
-    form.find('#reg-field').val(data.headers[4].value);
     form.find('#date-field').val(formattedDate);
+
+    if(data.headers[2]) {
+        form.find('#pilot-field').val(data.headers[2].value);
+    }
+
+    if(data.headers[4]) {
+        form.find('#reg-field').val(data.headers[4].value);
+    }
 
     if(data.flightTimings !== null) {
         form.find('#takeoff-time-field').val(timestampToTime(data.flightTimings.takeoff));

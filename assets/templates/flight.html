@@ -10,6 +10,11 @@
         <td>{{duration}}</td>
         <td>{{distance}}</td>
         <td>{{comment}}</td>
-        <td><a href="https://s3-eu-west-1.amazonaws.com/clementallen/logbook/flights/{{fileName}}"><i class="material-icons">cloud_download</i></a></td>
+        {{#noTrace}}
+            <td>N/A</td>
+        {{/noTrace}}
+        {{^noTrace}}
+            <td><a href="https://s3-eu-west-1.amazonaws.com/clementallen/logbook/flights/{{fileName}}"><i class="material-icons">cloud_download</i></a></td>
+        {{/noTrace}}
     </tr>
 </script>

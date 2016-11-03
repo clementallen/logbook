@@ -4,6 +4,13 @@ function renderFlight(template, flight) {
     flight.takeoffTime = formatTime(flight.takeoffTime);
     flight.landingTime = formatTime(flight.landingTime);
     flight.distance += ' km';
+
+    if(flight.fileName == 'no-trace-available.igc') {
+        flight.noTrace = true;
+    } else {
+        flight.noTrace = false;
+    }
+
     $('#' + flight.year + ' .logbook-entries').append(Mustache.render(template, flight));
 }
 
