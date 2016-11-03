@@ -44,8 +44,8 @@ api.route('/stats/:year?')
                     totalDistance: { $sum: '$tmp.totalDistance' },
                     totalDuration: { $sum: '$tmp.totalDuration' },
                     totalFlights: { $sum: '$tmp.totalFlights' },
-                    averageDistance: { $sum: '$tmp.averageDistance' },
-                    averageDuration: { $sum: '$tmp.averageDuration' },
+                    averageDistance: { $avg: '$tmp.averageDistance' },
+                    averageDuration: { $avg: '$tmp.averageDuration' },
                     pilots: {
                         $addToSet: '$tmp'
                     }
