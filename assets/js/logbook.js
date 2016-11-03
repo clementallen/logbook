@@ -41,11 +41,15 @@ function formatDate(date) {
     return dateFormat(date, 'dS mmm');
 }
 
-function formatDuration(seconds) {
-    var date = new Date(null);
-    date.setSeconds(seconds);
+function formatDuration(sec) {
+    var minutes = Math.floor(sec / 60);
+    var hours = Math.round(Math.floor(sec / 3600), 2);
 
-    return date.toISOString().substr(11, 5);
+    var remainingMinutes = minutes - (hours * 60);
+
+    var formattedMinutes = (remainingMinutes <= 9 ? '0' : '') + remainingMinutes;
+
+    return hours + ':' + formattedMinutes;
 }
 
 function formatTime(timestamp) {
@@ -57,7 +61,7 @@ function formatTime(timestamp) {
 function compare(a, b) {
     if (a.date < b.date) {
         return -1;
-        
+
     } else if(a.date > b.date) {
         return 1;
     }
