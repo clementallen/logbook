@@ -24,7 +24,7 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "s3": "^4.4.0",
-    "serve-favicon": "^2.3.0"
+    "serve-favicon": "^2.3.2"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
