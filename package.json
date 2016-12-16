@@ -19,7 +19,7 @@
     "express-session": "^1.14.2",
     "formidable": "^1.0.17",
     "handlebars": "^4.0.6",
-    "mongoose": "^4.7.2",
+    "mongoose": "^4.7.3",
     "morgan": "^1.7.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
