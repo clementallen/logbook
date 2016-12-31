@@ -5,8 +5,8 @@ var Flight = require('../../models/Flight');
 
 api.route('/stats/:year?')
 
-    .get(function(req, res) {
-        var years = [2014, 2015, 2016];
+    .get((req, res) => {
+        var years = [2014, 2015, 2016, 2017];
         if(req.params.year) {
             var year = parseInt(req.params.year, 10);
             years = [year];
@@ -51,7 +51,7 @@ api.route('/stats/:year?')
                     }
                 }
             }
-        ]).exec(function(error, result) {
+        ]).exec((error, result) => {
             if(error) {
                 res.status(500);
                 res.json({

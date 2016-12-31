@@ -8,7 +8,7 @@ var accountDelete = require('./account/delete');
 router.get('/delete', middleware.signedInOnly, accountDelete);
 router.post('/delete', middleware.signedInOnly, accountDelete);
 
-router.get('/', middleware.signedInOnly, function(req, res) {
+router.get('/', middleware.signedInOnly, (req, res) => {
     res.render('account', {
         title: 'Logbook | Account',
         user: req.user,

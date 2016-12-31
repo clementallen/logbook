@@ -1,7 +1,7 @@
 var middleware = require('../modules/middleware');
 
-module.exports = function(app, passport) {
-    app.get('/signin', middleware.signedOutOnly, function(req, res) {
+module.exports = (app, passport) => {
+    app.get('/signin', middleware.signedOutOnly, (req, res) => {
         res.render('signin', {
             title: 'Logbook | Signin',
             message: req.flash('message')
@@ -12,7 +12,7 @@ module.exports = function(app, passport) {
         failureRedirect: '/signin',
         failureFlash: true
 
-    }), function(req, res) {
+    }), (req, res) => {
         var ptrt = req.session.ptrt ? req.session.ptrt : '/';
         delete req.session.ptrt;
         res.redirect(ptrt);
