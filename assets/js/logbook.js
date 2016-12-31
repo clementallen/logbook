@@ -113,7 +113,7 @@ function getStats() {
 }
 
 function getAnnualStats() {
-    var years = [2014, 2015, 2016];
+    var years = [2014, 2015, 2016, 2017];
 
     getTemplate('stat', function(template) {
         $.each(years, function(i, stats) {

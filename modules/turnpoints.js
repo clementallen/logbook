@@ -1285,6 +1285,6 @@ var exports = {
     "abergavenny": "ABE",
     "aboyne dinnet": "ABD",
     "abbot's bromley": "ABB"
-}
+};
 
 module.exports = exports;

@@ -1,5 +1,5 @@
 module.exports = {
-    signedInOnly: function(req, res, next) {
+    signedInOnly: (req, res, next) => {
         if (req.isAuthenticated()) {
             return next();
         } else {
@@ -9,7 +9,7 @@ module.exports = {
         }
     },
 
-    signedOutOnly: function(req, res, next) {
+    signedOutOnly: (req, res, next) => {
         if (req.isAuthenticated()) {
             req.flash('message', 'Please sign out to access this page');
             res.redirect('back');

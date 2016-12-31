@@ -200,7 +200,7 @@ function parsePosition(positionRecord, model, readEnl) {
 }
 
 //Parsing function starts here
-exports = function(igcFile) {
+exports = (igcFile) => {
   'use strict';
   var igcLines = igcFile.split('\n');
   if(igcLines.length < 2) {

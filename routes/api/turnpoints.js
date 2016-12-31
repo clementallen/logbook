@@ -4,7 +4,7 @@ var turnpoints = require('../../modules/turnpoints');
 
 api.route('/turnpoints')
 
-    .get(function(req, res) {
+    .get((req, res) => {
         res.json(turnpoints);
     });
 

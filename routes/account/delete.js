@@ -6,14 +6,14 @@ var User = require('../../models/User');
 
 router.route('/delete')
 
-    .get(function(req, res) {
+    .get((req, res) => {
         res.render('delete-account', {
             title: 'Logbook | Delete account',
             message: req.flash('message')
         });
     })
-    .post(function(req, res) {
-        User.remove({username: req.user.username}, function(err, res) {
+    .post((req, res) => {
+        User.remove({username: req.user.username}, (err, res) => {
             if(err) {
                 console.log(err);
             } else {

@@ -5,8 +5,8 @@ var Flight = require('../../models/Flight');
 
 api.route('/flight/:id')
 
-    .get(function(req, res) {
-        Flight.findById(req.params.id, function(err, flight) {
+    .get((req, res) => {
+        Flight.findById(req.params.id, (err, flight) => {
             if(err) {
                 res.status(500);
                 res.json({

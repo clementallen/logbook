@@ -4,7 +4,7 @@ var parseIGC = require('../../modules/igcParser.js');
 
 api.route('/flight-info')
 
-    .post(function(req, res) {
+    .post((req, res) => {
         var trace = req.body.trace;
         var flightData = parseIGC(trace);
 

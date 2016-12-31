@@ -1,5 +1,5 @@
-module.exports = function(app, passport) {
-    app.get('/signout',function(req, res) {
+module.exports = (app, passport) => {
+    app.get('/signout', (req, res) => {
         req.logout();
         res.redirect('/');
     });

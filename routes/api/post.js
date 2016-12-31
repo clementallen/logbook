@@ -36,7 +36,7 @@ function saveFlight(req, res, next) {
     flight.landingTime = flightData.landingTimestamp;
     flight.duration = (flightData.landingTimestamp - flightData.takeoffTimestamp) / 1000;
 
-    flight.save(function(err, flight) {
+    flight.save((err, flight) => {
         if(err) {
             next(err, req, res);
         } else {
@@ -58,18 +58,18 @@ function uploadToS3(req, res, next) {
 
         s3Params: {
             Bucket: 'clementallen',
-            Key: 'logbook/flights/' + req.customData.fileName,
+            Key: `logbook/flights/${req.customData.fileName}`,
         },
     };
 
     var uploader = client.uploadFile(params);
 
-    uploader.on('error', function(err) {
+    uploader.on('error', (err) => {
         console.error('unable to upload:', err.stack);
         next(err, req, res);
     });
 
-    uploader.on('end', function() {
+    uploader.on('end', () => {
         fs.unlink(req.customData.filePath);
 
         next(null, req, res);
@@ -84,23 +84,23 @@ function saveTraceLocally(req, res, next) {
 
     form.uploadDir = path.join(__dirname, '../../flights');
 
-    form.on('field', function(field, value) {
+    form.on('field', (field, value) => {
         fields[field] = value;
     });
 
-    form.on('file', function(field, file) {
+    form.on('file', (field, file) => {
         fileName = file.name;
         filePath = path.join(form.uploadDir, file.name);
         fields.fileName = fileName;
         fs.rename(file.path, filePath);
     });
 
-    form.on('error', function(err) {
-        console.log('An error has occured: \n' + err);
+    form.on('error', (err) => {
+        console.log(`An error has occured: \n ${err}`);
         return next(err, req, res);
     });
 
-    form.on('end', function() {
+    form.on('end', () => {
         req.customData = {
             formFields: fields,
             filePath: filePath,
@@ -115,14 +115,14 @@ function saveTraceLocally(req, res, next) {
 
 api.route('/flight')
 
-    .post(function(req, res) {
-        saveTraceLocally(req, res, function(err, req, res) {
+    .post((req, res) => {
+        saveTraceLocally(req, res, (err, req, res) => {
             if(err) return handleError(err, req, res);
 
-            uploadToS3(req, res, function(err, req, res) {
+            uploadToS3(req, res, (err, req, res) => {
                 if(err) return handleError(err, req, res);
 
-                saveFlight(req, res, function(err, req, res) {
+                saveFlight(req, res, (err, req, res) => {
                     if(err) return handleError(err, req, res);
 
                     res.json({

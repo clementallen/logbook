@@ -5,8 +5,8 @@ var Flight = require('../../models/Flight');
 
 api.route('/flights')
 
-    .get(function(req, res) {
-        Flight.find().sort({ date: 1, takeoffTime: 1}).exec(function(err, flights) {
+    .get((req, res) => {
+        Flight.find().sort({ date: 1, takeoffTime: 1}).exec((err, flights) => {
             if(err) {
                 res.status(500);
                 res.json({

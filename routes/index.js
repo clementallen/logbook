@@ -8,7 +8,7 @@ router.get('/', (req, res, next) => {
         signedIn: req.isAuthenticated(),
         message: req.flash('message'),
         tempMessage: config.tempMessage,
-        years: [2014, 2015, 2016]
+        years: [2014, 2015, 2016, 2017]
     });
 });
 
