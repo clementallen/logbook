@@ -1,7 +1,7 @@
-var express = require('express');
-var router = express.Router();
-var config = require('../config/config');
-var middleware = require('../modules/middleware');
+const express = require('express');
+const middleware = require('../modules/middleware');
+
+const router = express.Router();
 
 router.get('/', middleware.signedInOnly, (req, res, next) => {
     res.render('upload', {

@@ -1,21 +1,21 @@
 // Require gulp
-var gulp = require('gulp');
+const gulp = require('gulp');
 
 // Require plugins
-var sass = require('gulp-sass');
-var concat = require('gulp-concat');
-var rename = require('gulp-rename');
-var uglify = require('gulp-uglify');
-var minifyHTML = require('gulp-minify-html');
-var concatCss = require('gulp-concat-css');
-var minifyCss = require('gulp-minify-css');
+const sass = require('gulp-sass');
+const concat = require('gulp-concat');
+const rename = require('gulp-rename');
+const uglify = require('gulp-uglify');
+const minifyHTML = require('gulp-minify-html');
+const concatCss = require('gulp-concat-css');
+const minifyCss = require('gulp-minify-css');
 
 gulp.task('sass', () => {
     return gulp.src(['./assets/sass/main.scss'])
         .pipe(sass({
             outputStyle: 'expanded'
         }).on('error', sass.logError))
-        .pipe(rename({suffix: '.min'}))
+        .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('./public/css'));
 });
 
@@ -55,16 +55,13 @@ gulp.task('minify-css', ['sass', 'vendor-css'], () => {
 });
 
 gulp.task('copy-assets', () => {
-    var images = gulp.src(['./assets/img/*.jpg'])
-        .pipe(gulp.dest('./public/img'));
-
-    var templates = gulp.src(['./assets/templates/*'])
+    return gulp.src(['./assets/templates/*'])
         .pipe(gulp.dest('./public/templates'));
 });
 
 
 gulp.task('minify-templates', ['templates'], () => {
-    var opts = {
+    const opts = {
         conditionals: true,
         spare: true,
         empty: true,
