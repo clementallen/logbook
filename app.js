@@ -1,32 +1,32 @@
-var path = require('path');
-var morgan = require('morgan');
-var express = require('express');
-var mongoose = require('mongoose');
-var passport = require('passport');
-var flash = require('connect-flash');
-var favicon = require('serve-favicon');
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var exphbs = require('express-handlebars');
-var cookieParser = require('cookie-parser');
-var MongoStore = require('connect-mongo/es5')(session);
+const path = require('path');
+const morgan = require('morgan');
+const express = require('express');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const flash = require('connect-flash');
+const favicon = require('serve-favicon');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const exphbs = require('express-handlebars');
+const cookieParser = require('cookie-parser');
+const MongoStore = require('connect-mongo/es5')(session);
 
-var index = require('./routes/index');
-var account = require('./routes/account');
-var upload = require('./routes/upload');
-var api = require('./routes/api');
+const index = require('./routes/index');
+const account = require('./routes/account');
+const upload = require('./routes/upload');
+const api = require('./routes/api');
 
 require('./config/passport')(passport);
-var config = require('./config/config');
+const config = require('./config/config');
 
 // Init the express app
-var app = express();
+const app = express();
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/logbook');
 
 // view engine setup
-var hbs = exphbs.create({
+const hbs = exphbs.create({
     extname: '.hbs',
     defaultLayout: 'main'
 });
@@ -49,7 +49,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     cookie: {
-        maxAge : 2629746000 // one hour in millis
+        maxAge: 2629746000 // one hour in millis
     },
     store: new MongoStore({
         mongooseConnection: mongoose.connection
@@ -72,7 +72,7 @@ app.use('/api', api);
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
-    var err = new Error('Not Found');
+    const err = new Error('Not Found');
     err.status = 404;
     next(err);
 });

@@ -5,16 +5,16 @@ $('#logbook-tablist a').on('click', function(e) {
 
 function loadPageFromHash() {
     var hash = window.location.hash.substring(1);
-    if(hash === '') {
+    if (hash === '') {
         $('#logbook-tablist a[aria-controls="2017"]').click();
     } else {
         $('#logbook-tablist a[aria-controls=' + hash + ']').click();
     }
 }
 
-//shows page depending on url
+// shows page depending on url
 $(document).ready(loadPageFromHash);
-$(window).on('hashchange',loadPageFromHash);
+$(window).on('hashchange', loadPageFromHash);
 
 // Highlights active page in navbar
 $('a[href="' + this.location.pathname + '"]').parent().addClass('active');
@@ -24,7 +24,7 @@ $.material.init();
 
 // If the page has a message
 var messageAlert = $('.message-alert');
-if(messageAlert.length) {
+if (messageAlert.length) {
     $('body').append($('<div id="lightbox">'));
     var lightbox = $('#lightbox');
 
@@ -36,6 +36,7 @@ if(messageAlert.length) {
 
 // Dismisses alerts and lightboxes
 $('[data-dismiss=\'alert\']').on('click', function() {
+    var lightbox = $('#lightbox');
     lightbox.fadeOut();
 });
 

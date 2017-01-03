@@ -1,9 +1,8 @@
-var express = require('express');
-var router = express.Router();
-var mongoose = require('mongoose');
-var User = require('../models/User');
-var middleware = require('../modules/middleware');
-var accountDelete = require('./account/delete');
+const express = require('express');
+const middleware = require('../modules/middleware');
+const accountDelete = require('./account/delete');
+
+const router = express.Router();
 
 router.get('/delete', middleware.signedInOnly, accountDelete);
 router.post('/delete', middleware.signedInOnly, accountDelete);

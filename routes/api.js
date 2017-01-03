@@ -1,23 +1,19 @@
-var express = require('express');
-var api = express.Router();
-var mongoose = require('mongoose');
-var middleware = require('../modules/middleware');
+const express = require('express');
+const middleware = require('../modules/middleware');
+const flightApiGet = require('./api/get');
+const flightApiPost = require('./api/post');
+const flightApiSingleGet = require('./api/single-get');
+const flightInfoApiPost = require('./api/flight-info');
+const turnpointsApiGet = require('./api/turnpoints');
+const statsApiGet = require('./api/stats');
 
-var flightApiGet = require('./api/get');
-var flightApiPost = require('./api/post');
-var flightApiSingleGet = require('./api/single-get');
+const api = express.Router();
 
 api.get('/flights', flightApiGet);
 api.get('/flight/:id', flightApiSingleGet);
 api.post('/flight', middleware.signedInOnly, flightApiPost);
-
-var flightInfoApiPost = require('./api/flight-info');
 api.post('/flight-info', middleware.signedInOnly, flightInfoApiPost);
-
-var turnpointsApiGet = require('./api/turnpoints');
 api.get('/turnpoints', turnpointsApiGet);
-
-var statsApiGet = require('./api/stats');
 api.get('/stats/:year?', statsApiGet);
 
 module.exports = api;
