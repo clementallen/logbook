@@ -7,7 +7,7 @@ function formatTask(taskArray, callback) {
     var formattedTask = '';
 
     getTurnpoints(function(turnpoints) {
-        for(var i = 0; i < taskArray.length; i++) {
+        for (var i = 0; i < taskArray.length; i++) {
             var tp = taskArray[i].substring(17).toLowerCase();
 
             if(turnpoints.hasOwnProperty(tp)) {

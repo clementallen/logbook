@@ -5,7 +5,7 @@ function renderFlight(template, flight) {
     flight.landingTime = formatTime(flight.landingTime);
     flight.distance += ' km';
 
-    if(flight.fileName == 'no-trace-available.igc') {
+    if (flight.fileName === 'no-trace-available.igc') {
         flight.noTrace = true;
     } else {
         flight.noTrace = false;
@@ -20,11 +20,11 @@ function renderStats(template, stats, year) {
     stats.averageDuration = formatDuration(stats.averageDuration);
     stats.averageDistance = Math.round(stats.averageDistance) + ' km';
 
-    if(!stats.pilot) {
+    if (!stats.pilot) {
         stats.pilot = 'Total';
     }
 
-    if(year) {
+    if (year) {
         $('#' + year + ' .stat-entries').append(Mustache.render(template, stats));
     } else {
         $('#stats .stat-entries').append(Mustache.render(template, stats));
@@ -61,8 +61,7 @@ function formatTime(timestamp) {
 function compare(a, b) {
     if (a.date < b.date) {
         return -1;
-
-    } else if(a.date > b.date) {
+    } else if (a.date > b.date) {
         return 1;
     }
 
@@ -81,7 +80,7 @@ function getFlights() {
         success: function(flights) {
             flights.sort(compare);
             getTemplate('flight', function(template) {
-                $.each(flights, function(i, flight){
+                $.each(flights, function(i, flight) {
                     renderFlight(template, flight);
                 });
                 $('.logbook-table').fadeIn();
@@ -136,8 +135,8 @@ function getAnnualStats() {
     });
 }
 
-getFlights();
-
-getAnnualStats();
-
-getStats();
+if (this.location.pathname === '/') {
+    getFlights();
+    getAnnualStats();
+    getStats();
+}

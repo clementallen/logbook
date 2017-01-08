@@ -61,7 +61,7 @@ gulp.task('copy-assets', () => {
 
 
 gulp.task('minify-templates', ['templates'], () => {
-    const opts = {
+    const options = {
         conditionals: true,
         spare: true,
         empty: true,
@@ -69,7 +69,7 @@ gulp.task('minify-templates', ['templates'], () => {
     };
 
     return gulp.src(['./public/templates/*.html'])
-        .pipe(minifyHTML(opts))
+        .pipe(minifyHTML(options))
         .pipe(gulp.dest('./public/templates'));
 });
 
