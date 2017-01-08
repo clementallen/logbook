@@ -1,14 +1,14 @@
-var express = require('express');
-var api = express.Router();
-var mongoose = require('mongoose');
-var Flight = require('../../models/Flight');
+const express = require('express');
+const Flight = require('../../models/Flight');
+
+const api = express.Router();
 
 api.route('/stats/:year?')
 
     .get((req, res) => {
-        var years = [2014, 2015, 2016, 2017];
-        if(req.params.year) {
-            var year = parseInt(req.params.year, 10);
+        let years = [2014, 2015, 2016, 2017];
+        if (req.params.year) {
+            const year = parseInt(req.params.year, 10);
             years = [year];
         }
 
@@ -34,7 +34,7 @@ api.route('/stats/:year?')
                         totalDuration: '$totalDuration',
                         totalFlights: '$totalFlights',
                         averageDistance: '$averageDistance',
-                        averageDuration: '$averageDuration',
+                        averageDuration: '$averageDuration'
                     }
                 }
             },
@@ -52,13 +52,12 @@ api.route('/stats/:year?')
                 }
             }
         ]).exec((error, result) => {
-            if(error) {
+            if (error) {
                 res.status(500);
                 res.json({
                     success: false,
                     message: error
                 });
-
             } else {
                 res.json(result);
             }

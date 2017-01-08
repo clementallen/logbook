@@ -38,7 +38,9 @@
                 <ul class="nav navbar-nav navbar-right">
                     {{#unless signedIn}}
                         <li><a class="nav-signin" href="/signin">Sign In</a></li>
-                        <li><a class="nav-register" href="/register">Register</a></li>
+                        {{#if flagpole.registerEnabled}}
+                            <li><a class="nav-register" href="/register">Register</a></li>
+                        {{/if}}
                     {{else}}
                         <li><a class="nav-account" href="/account">Account</a></li>
                         <li><a class="nav-signout" href="/signout">Sign Out</a></li>
