@@ -28,6 +28,8 @@
 
     </div>
 
-    <p>Need an account? <a href="/register">Register</a></p>
+    {{#if flagpole.registerEnabled}}
+        <p>Need an account? <a href="/register">Register</a></p>
+    {{/if}}
 
 </div>
