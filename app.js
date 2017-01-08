@@ -25,6 +25,10 @@ const app = express();
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/logbook');
 
+app.locals = {
+    flagpole: config.flagpole
+};
+
 // view engine setup
 const hbs = exphbs.create({
     extname: '.hbs',

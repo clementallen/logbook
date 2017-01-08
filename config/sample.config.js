@@ -1,4 +1,7 @@
-var config = {
+const config = {
+    flagpole: {
+        registerEnabled: true
+    },
     auth: {
         secret: 'auth-secret-here'
     },
