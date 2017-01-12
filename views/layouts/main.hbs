@@ -33,18 +33,20 @@
 
             <div class="collapse navbar-collapse" id="main-basic-navbar">
                 <ul class="nav navbar-nav">
-                    <li><a href="/upload">Upload</a></li>
+                    {{#if signedIn}}
+                        <li><a href="/upload">Upload</a></li>
+                    {{/if}}
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    {{#unless signedIn}}
+                    {{#if signedIn}}
+                        <li><a class="nav-account" href="/account">Account</a></li>
+                        <li><a class="nav-signout" href="/signout">Sign Out</a></li>
+                    {{else}}
                         <li><a class="nav-signin" href="/signin">Sign In</a></li>
                         {{#if flagpole.registerEnabled}}
                             <li><a class="nav-register" href="/register">Register</a></li>
                         {{/if}}
-                    {{else}}
-                        <li><a class="nav-account" href="/account">Account</a></li>
-                        <li><a class="nav-signout" href="/signout">Sign Out</a></li>
-                    {{/unless}}
+                    {{/if}}
                 </ul>
             </div>
         </div>
