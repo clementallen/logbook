@@ -1,4 +1,4 @@
-const exports = {
+module.exports = {
     yattendon: 'YTT',
     yeovilton: 'YTN',
     york: 'YOR',
@@ -1286,5 +1286,3 @@ const exports = {
     'aboyne dinnet': 'ABD',
     'abbot\'s bromley': 'ABB'
 };
-
-module.exports = exports;
