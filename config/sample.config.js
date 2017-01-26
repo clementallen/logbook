@@ -6,6 +6,8 @@ const config = {
         secret: 'auth-secret'
     },
     aws: {
+        bucket: 'bucket-name',
+        path: 'path/to/folder/',
         accessKey: 'aws-access-key',
         secretKey: 'aws-secret-key'
     }

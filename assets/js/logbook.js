@@ -69,7 +69,7 @@ function compare(a, b) {
 }
 
 function orderPilots(a, b) {
-    return b.pilot < a.pilot ?  1
+    return b.pilot < a.pilot ? 1
          : b.pilot > a.pilot ? -1
          : 0;
 }
