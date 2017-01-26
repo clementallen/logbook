@@ -1,10 +1,9 @@
-var express = require('express');
-var api = express.Router();
-var mongoose = require('mongoose');
-var Flight = require('../../models/Flight');
+const express = require('express');
+const Flight = require('../../models/Flight');
+
+const api = express.Router();
 
 api.route('/flights')
-
     .get((req, res) => {
         Flight.find().sort({ date: 1, takeoffTime: 1 }).exec((err, flights) => {
             if (err) {

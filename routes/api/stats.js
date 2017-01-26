@@ -4,7 +4,6 @@ const Flight = require('../../models/Flight');
 const api = express.Router();
 
 api.route('/stats/:year?')
-
     .get((req, res) => {
         let years = [2014, 2015, 2016, 2017];
         if (req.params.year) {

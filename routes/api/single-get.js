@@ -1,19 +1,17 @@
-var express = require('express');
-var api = express.Router();
-var mongoose = require('mongoose');
-var Flight = require('../../models/Flight');
+const express = require('express');
+const Flight = require('../../models/Flight');
+
+const api = express.Router();
 
 api.route('/flight/:id')
-
     .get((req, res) => {
         Flight.findById(req.params.id, (err, flight) => {
-            if(err) {
+            if (err) {
                 res.status(500);
                 res.json({
                     success: false,
                     message: err
                 });
-
             } else {
                 res.json(flight);
             }

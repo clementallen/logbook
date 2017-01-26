@@ -1,7 +1,7 @@
 module.exports = {
     signedInOnly: (req, res, next) => {
         if (req.isAuthenticated()) {
-            return next();
+            next();
         } else {
             req.flash('message', 'Please sign in to access this page');
             req.session.ptrt = req.originalUrl;
@@ -14,7 +14,7 @@ module.exports = {
             req.flash('message', 'Please sign out to access this page');
             res.redirect('back');
         } else {
-            return next();
+            next();
         }
     }
 };

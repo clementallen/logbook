@@ -1,13 +1,12 @@
-var express = require('express');
-var api = express.Router();
-var mongoose = require('mongoose');
-var fs = require('fs');
-var formidable = require('formidable');
-var path = require('path');
-var parseIGC = require('../../modules/igcParser.js');
-var Flight = require('../../models/Flight');
-var config = require('../../config/config');
-var s3 = require('s3');
+const express = require('express');
+const fs = require('fs');
+const formidable = require('formidable');
+const path = require('path');
+const Flight = require('../../models/Flight');
+const config = require('../../config/config');
+const s3 = require('s3');
+
+const api = express.Router();
 
 function handleError(err, req, res) {
     res.status(500);
@@ -18,8 +17,8 @@ function handleError(err, req, res) {
 }
 
 function saveFlight(req, res, next) {
-    var flight = new Flight();
-    var flightData = req.customData.formFields;
+    const flight = new Flight();
+    const flightData = req.customData.formFields;
 
     flight.pilot = flightData.pilot;
     flight.registration = flightData.registration;
@@ -36,8 +35,8 @@ function saveFlight(req, res, next) {
     flight.landingTime = flightData.landingTimestamp;
     flight.duration = (flightData.landingTimestamp - flightData.takeoffTimestamp) / 1000;
 
-    flight.save((err, flight) => {
-        if(err) {
+    flight.save((err, dbFlight) => {
+        if (err) {
             next(err, req, res);
         } else {
             next(null, req, res);
@@ -46,23 +45,22 @@ function saveFlight(req, res, next) {
 }
 
 function uploadToS3(req, res, next) {
-    var client = s3.createClient({
+    const client = s3.createClient({
         s3Options: {
             accessKeyId: config.aws.accessKey,
-            secretAccessKey: config.aws.secretKey,
-        },
+            secretAccessKey: config.aws.secretKey
+        }
     });
 
-    var params = {
+    const params = {
         localFile: req.customData.filePath,
-
         s3Params: {
             Bucket: 'clementallen',
-            Key: `logbook/flights/${req.customData.fileName}`,
-        },
+            Key: `logbook/flights/${req.customData.fileName}`
+        }
     };
 
-    var uploader = client.uploadFile(params);
+    const uploader = client.uploadFile(params);
 
     uploader.on('error', (err) => {
         console.error('unable to upload:', err.stack);
@@ -77,10 +75,10 @@ function uploadToS3(req, res, next) {
 }
 
 function saveTraceLocally(req, res, next) {
-    var fields = {};
-    var fileName;
-    var filePath;
-    var form = new formidable.IncomingForm();
+    const form = new formidable.IncomingForm();
+    const fields = {};
+    let fileName;
+    let filePath;
 
     form.uploadDir = path.join(__dirname, '../../flights');
 
@@ -103,8 +101,8 @@ function saveTraceLocally(req, res, next) {
     form.on('end', () => {
         req.customData = {
             formFields: fields,
-            filePath: filePath,
-            fileName: fileName
+            filePath,
+            fileName
         };
 
         next(null, req, res);
@@ -117,13 +115,13 @@ api.route('/flight')
 
     .post((req, res) => {
         saveTraceLocally(req, res, (err, req, res) => {
-            if(err) return handleError(err, req, res);
+            if (err) return handleError(err, req, res);
 
             uploadToS3(req, res, (err, req, res) => {
-                if(err) return handleError(err, req, res);
+                if (err) return handleError(err, req, res);
 
                 saveFlight(req, res, (err, req, res) => {
-                    if(err) return handleError(err, req, res);
+                    if (err) return handleError(err, req, res);
 
                     res.json({
                         success: true
