@@ -1,6 +1,7 @@
 const path = require('path');
 const morgan = require('morgan');
 const express = require('express');
+const bluebird = require('bluebird');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const flash = require('connect-flash');
@@ -22,7 +23,7 @@ const config = require('./config/config');
 // Init the express app
 const app = express();
 
-mongoose.Promise = global.Promise;
+mongoose.Promise = bluebird;
 mongoose.connect('mongodb://localhost/logbook');
 
 app.locals = {
@@ -53,7 +54,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     cookie: {
-        maxAge: 2629746000 // one hour in millis
+        maxAge: 2629746000 // one month in millis
     },
     store: new MongoStore({
         mongooseConnection: mongoose.connection

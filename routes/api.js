@@ -10,7 +10,7 @@ const statsApiGet = require('./api/stats');
 const api = express.Router();
 
 api.get('/flights', flightApiGet);
-api.get('/flight/:id', flightApiSingleGet);
+api.get('/flights/:id', flightApiSingleGet);
 api.post('/flight', middleware.signedInOnly, flightApiPost);
 api.post('/flight-info', middleware.signedInOnly, flightInfoApiPost);
 api.get('/turnpoints', turnpointsApiGet);

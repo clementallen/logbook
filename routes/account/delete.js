@@ -11,15 +11,13 @@ router.route('/delete')
         });
     })
     .post((req, res) => {
-        User.remove({ username: req.user.username }, (err, mongoResult) => {
-            if (err) {
-                console.log(err);
-            } else {
-                req.logout();
-            }
+        User.remove({ username: req.user.username }).then(() => {
+            req.logout();
+            req.flash('message', 'Your account has been deleted, we\'re sorry to see you go :(');
+            res.redirect('/');
+        }).catch((error) => {
+            req.flash('message', 'We were unable to remove your account.  Please try again');
         });
-        req.flash('message', 'Your account has been deleted, we\'re sorry to see you go :(');
-        res.redirect('/');
     });
 
 

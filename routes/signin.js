@@ -11,7 +11,6 @@ module.exports = (app, passport) => {
     app.post('/signin', middleware.signedOutOnly, passport.authenticate('local-login', {
         failureRedirect: '/signin',
         failureFlash: true
-
     }), (req, res) => {
         const ptrt = req.session.ptrt ? req.session.ptrt : '/';
         delete req.session.ptrt;

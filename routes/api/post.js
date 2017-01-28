@@ -29,12 +29,11 @@ function saveFlight(traceData) {
         flight.landingTime = flightData.landingTimestamp;
         flight.duration = (flightData.landingTimestamp - flightData.takeoffTimestamp) / 1000;
 
-        flight.save((error, dbFlight) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve();
-            }
+        flight.save().then(() => {
+            resolve();
+        })
+        .catch((error) => {
+            reject(error);
         });
     });
 }
