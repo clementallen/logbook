@@ -1,9 +1,9 @@
-var express = require('express');
-var api = express.Router();
-var turnpoints = require('../../modules/turnpoints');
+const express = require('express');
+const turnpoints = require('../../modules/turnpoints');
+
+const api = express.Router();
 
 api.route('/turnpoints')
-
     .get((req, res) => {
         res.json(turnpoints);
     });

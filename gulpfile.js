@@ -3,10 +3,10 @@ const gulp = require('gulp');
 
 // Require plugins
 const sass = require('gulp-sass');
+const babel = require('gulp-babel');
 const concat = require('gulp-concat');
 const rename = require('gulp-rename');
 const uglify = require('gulp-uglify');
-const minifyHTML = require('gulp-minify-html');
 const concatCss = require('gulp-concat-css');
 const minifyCss = require('gulp-minify-css');
 
@@ -22,12 +22,15 @@ gulp.task('sass', () => {
 gulp.task('scripts', () => {
     return gulp.src(['./assets/js/*.js'])
         .pipe(concat('main.min.js'))
+        .pipe(babel({
+            presets: [
+                [
+                    'es2015',
+                    { modules: false }
+                ]
+            ]
+        }))
         .pipe(gulp.dest('./public/js'));
-});
-
-gulp.task('templates', () => {
-    return gulp.src(['./assets/templates/*'])
-        .pipe(gulp.dest('./public/templates'));
 });
 
 gulp.task('vendor-js', () => {
@@ -54,36 +57,16 @@ gulp.task('minify-css', ['sass', 'vendor-css'], () => {
         .pipe(gulp.dest('./public/css'));
 });
 
-gulp.task('copy-assets', () => {
-    return gulp.src(['./assets/templates/*'])
-        .pipe(gulp.dest('./public/templates'));
-});
-
-
-gulp.task('minify-templates', ['templates'], () => {
-    const options = {
-        conditionals: true,
-        spare: true,
-        empty: true,
-        quotes: true
-    };
-
-    return gulp.src(['./public/templates/*.html'])
-        .pipe(minifyHTML(options))
-        .pipe(gulp.dest('./public/templates'));
-});
-
 gulp.task('watch', () => {
     gulp.watch('./assets/js/*.js', ['scripts']);
     gulp.watch('./assets/js/vendor/*.js', ['vendor-js']);
     gulp.watch('./assets/css/vendor/*.css', ['vendor-css']);
     gulp.watch('./assets/sass/**/*.scss', ['sass']);
-    gulp.watch(['./assets/img/*.jpg', './assets/templates/*'], ['copy-assets']);
 });
 
-gulp.task('minify', ['minify-css', 'minify-js', 'minify-templates']);
-gulp.task('concat', ['vendor-css', 'vendor-js', 'scripts', 'sass', 'copy-assets']);
+gulp.task('minify', ['minify-css', 'minify-js']);
+gulp.task('concat', ['vendor-css', 'vendor-js', 'scripts', 'sass']);
 
 gulp.task('deploy', ['concat', 'minify']);
 
-gulp.task('default', ['concat', 'copy-assets', 'watch']);
+gulp.task('default', ['concat', 'watch']);

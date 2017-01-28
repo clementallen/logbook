@@ -1,3 +1,22 @@
+function formatDuration(sec) {
+    const minutes = Math.floor(sec / 60);
+    const hours = Math.round(Math.floor(sec / 3600), 2);
+    const remainingMinutes = minutes - (hours * 60);
+    const formattedMinutes = (remainingMinutes <= 9 ? '0' : '') + remainingMinutes;
+
+    return `${hours}:${formattedMinutes}`;
+}
+
+function formatDate(date) {
+    return dateFormat(date, 'dS mmm');
+}
+
+function formatTime(timestamp) {
+    const date = new Date(timestamp);
+
+    return date.toISOString().substr(11, 5);
+}
+
 function renderFlight(template, flight) {
     flight.date = formatDate(flight.date);
     flight.duration = formatDuration(flight.duration);
@@ -11,51 +30,28 @@ function renderFlight(template, flight) {
         flight.noTrace = false;
     }
 
-    $('#' + flight.year + ' .logbook-entries').append(Mustache.render(template, flight));
+    $(`#${flight.year} .logbook-entries`).append(Mustache.render(template, flight));
 }
 
 function renderStats(template, stats, year) {
     stats.totalDistance += ' km';
     stats.totalDuration = formatDuration(stats.totalDuration);
     stats.averageDuration = formatDuration(stats.averageDuration);
-    stats.averageDistance = Math.round(stats.averageDistance) + ' km';
+    stats.averageDistance = `${Math.round(stats.averageDistance)} km`;
 
     if (!stats.pilot) {
         stats.pilot = 'Total';
     }
 
     if (year) {
-        $('#' + year + ' .stat-entries').append(Mustache.render(template, stats));
+        $(`#${year} .stat-entries`).append(Mustache.render(template, stats));
     } else {
         $('#stats .stat-entries').append(Mustache.render(template, stats));
     }
 }
 
 function getTemplate(name, callback) {
-    $.get('/templates/' + name + '.html', function(template) {
-        callback($(template).filter('#' + name + '-template').html());
-    });
-}
-
-function formatDate(date) {
-    return dateFormat(date, 'dS mmm');
-}
-
-function formatDuration(sec) {
-    var minutes = Math.floor(sec / 60);
-    var hours = Math.round(Math.floor(sec / 3600), 2);
-
-    var remainingMinutes = minutes - (hours * 60);
-
-    var formattedMinutes = (remainingMinutes <= 9 ? '0' : '') + remainingMinutes;
-
-    return hours + ':' + formattedMinutes;
-}
-
-function formatTime(timestamp) {
-    var date = new Date(timestamp);
-
-    return date.toISOString().substr(11, 5);
+    callback($(`#${name}-template`).html());
 }
 
 function compare(a, b) {
@@ -69,24 +65,27 @@ function compare(a, b) {
 }
 
 function orderPilots(a, b) {
-    return b.pilot < a.pilot ?  1
-         : b.pilot > a.pilot ? -1
-         : 0;
+    if (b.pilot < a.pilot) {
+        return 1;
+    } else if (a.pilot < b.pilot) {
+        return -1;
+    }
+    return 0;
 }
 
 function getFlights() {
     $.ajax({
         url: '/api/flights',
-        success: function(flights) {
+        success: (flights) => {
             flights.sort(compare);
-            getTemplate('flight', function(template) {
-                $.each(flights, function(i, flight) {
+            getTemplate('flight', (template) => {
+                $.each(flights, (i, flight) => {
                     renderFlight(template, flight);
                 });
                 $('.logbook-table').fadeIn();
             });
         },
-        error: function(error) {
+        error: (error) => {
             console.log(error);
         }
     });
@@ -95,39 +94,39 @@ function getFlights() {
 function getStats() {
     $.ajax({
         url: '/api/stats',
-        success: function(stats) {
-            getTemplate('stat', function(template) {
+        success: (stats) => {
+            getTemplate('stat', (template) => {
                 stats[0].pilots.sort(orderPilots);
-                $.each(stats[0].pilots, function(i, stats) {
-                    renderStats(template, stats);
+                $.each(stats[0].pilots, (i, statistics) => {
+                    renderStats(template, statistics);
                 });
                 renderStats(template, stats[0]);
                 $('.stats-table').fadeIn();
             });
         },
-        error: function(error) {
+        error: (error) => {
             console.log(error);
         }
     });
 }
 
 function getAnnualStats() {
-    var years = [2014, 2015, 2016, 2017];
+    const years = [2017, 2016, 2015, 2014];
 
-    getTemplate('stat', function(template) {
-        $.each(years, function(i, stats) {
-            var currentYear = years[i];
+    getTemplate('stat', (template) => {
+        $.each(years, (i) => {
+            const currentYear = years[i];
             $.ajax({
-                url: '/api/stats/' + currentYear,
-                success: function(stats) {
+                url: `/api/stats/${currentYear}`,
+                success: (stats) => {
                     stats[0].pilots.sort(orderPilots);
-                    $.each(stats[0].pilots, function(i, stats) {
-                        renderStats(template, stats, currentYear);
+                    $.each(stats[0].pilots, (j, statistics) => {
+                        renderStats(template, statistics, currentYear);
                     });
                     renderStats(template, stats[0], currentYear);
-                    $('#' + currentYear + ' .stats-table').fadeIn();
+                    $(`#${currentYear} .stats-table`).fadeIn();
                 },
-                error: function(error) {
+                error: (error) => {
                     console.log(error);
                 }
             });
@@ -135,7 +134,7 @@ function getAnnualStats() {
     });
 }
 
-if (this.location.pathname === '/') {
+if (window.location.pathname === '/') {
     getFlights();
     getAnnualStats();
     getStats();

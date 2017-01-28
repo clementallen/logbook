@@ -70,9 +70,8 @@ function extractFlightTimings(igcFile) {
             takeoff: dateToTimestamp(flightTimingsString[1]),
             landing: dateToTimestamp(flightTimingsString[2]) - 600
         };
-    } else {
-        return flightTimings;
     }
+    return flightTimings;
 }
 
 function extractDate(igcFile) {
@@ -105,9 +104,8 @@ function getReadEnl(iRecord) {
             start: parseInt(pos.substring(0, 2), 10) - 1,
             end: parseInt(pos.substring(2, 4), 10)
         };
-    } else {
-        return null;
     }
+    return null;
 }
 
 function parseHeader(headerRecord) {
@@ -140,6 +138,8 @@ function parseHeader(headerRecord) {
             }
         }
     }
+
+    return null;
 }
 
 function parseLatLong(latLongString) {
@@ -194,6 +194,8 @@ function parsePosition(positionRecord, model, readEnl) {
             };
         }
     }
+
+    return null;
 }
 
 // Parsing function starts here

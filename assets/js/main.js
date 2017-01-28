@@ -4,11 +4,11 @@ $('#logbook-tablist a').on('click', function(e) {
 });
 
 function loadPageFromHash() {
-    var hash = window.location.hash.substring(1);
+    const hash = window.location.hash.substring(1);
     if (hash === '') {
         $('#logbook-tablist a[aria-controls="2017"]').click();
     } else {
-        $('#logbook-tablist a[aria-controls=' + hash + ']').click();
+        $(`#logbook-tablist a[aria-controls=${hash}]`).click();
     }
 }
 
@@ -17,30 +17,30 @@ $(document).ready(loadPageFromHash);
 $(window).on('hashchange', loadPageFromHash);
 
 // Highlights active page in navbar
-$('a[href="' + this.location.pathname + '"]').parent().addClass('active');
+$(`a[href="${window.location.pathname}"]`).parent().addClass('active');
 
 // Init material animations
 $.material.init();
 
 // If the page has a message
-var messageAlert = $('.message-alert');
+const messageAlert = $('.message-alert');
 if (messageAlert.length) {
     $('body').append($('<div id="lightbox">'));
-    var lightbox = $('#lightbox');
+    const lightbox = $('#lightbox');
 
-    setTimeout(function() {
+    setTimeout(() => {
         messageAlert.fadeOut();
         lightbox.fadeOut();
     }, 2000);
 }
 
 // Dismisses alerts and lightboxes
-$('[data-dismiss=\'alert\']').on('click', function() {
-    var lightbox = $('#lightbox');
+$('[data-dismiss=\'alert\']').on('click', () => {
+    const lightbox = $('#lightbox');
     lightbox.fadeOut();
 });
 
 // Hamburger
-$('.btn-hamburger').on('click', function() {
+$('.btn-hamburger').on('click', () => {
     $('.hamburger').toggleClass('is-active');
 });
