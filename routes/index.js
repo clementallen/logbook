@@ -7,7 +7,12 @@ router.get('/', (req, res, next) => {
         title: 'HCV Logbook',
         signedIn: req.isAuthenticated(),
         message: req.flash('message'),
-        years: [2014, 2015, 2016, 2017]
+        years: [2014, 2015, 2016, 2017],
+        helpers: {
+            raw: (content) => {
+                return content.fn();
+            }
+        }
     });
 });
 

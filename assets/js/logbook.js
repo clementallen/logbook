@@ -51,9 +51,7 @@ function renderStats(template, stats, year) {
 }
 
 function getTemplate(name, callback) {
-    $.get(`/templates/${name}.html`, (template) => {
-        callback($(template).filter(`#${name}-template`).html());
-    });
+    callback($(`#${name}-template`).html());
 }
 
 function compare(a, b) {
@@ -113,7 +111,7 @@ function getStats() {
 }
 
 function getAnnualStats() {
-    const years = [2014, 2015, 2016, 2017];
+    const years = [2017, 2016, 2015, 2014];
 
     getTemplate('stat', (template) => {
         $.each(years, (i) => {
