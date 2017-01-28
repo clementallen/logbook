@@ -3,12 +3,13 @@ const gulp = require('gulp');
 
 // Require plugins
 const sass = require('gulp-sass');
+const babel = require('gulp-babel');
 const concat = require('gulp-concat');
 const rename = require('gulp-rename');
 const uglify = require('gulp-uglify');
-const minifyHTML = require('gulp-minify-html');
 const concatCss = require('gulp-concat-css');
 const minifyCss = require('gulp-minify-css');
+const minifyHTML = require('gulp-minify-html');
 
 gulp.task('sass', () => {
     return gulp.src(['./assets/sass/main.scss'])
@@ -22,6 +23,14 @@ gulp.task('sass', () => {
 gulp.task('scripts', () => {
     return gulp.src(['./assets/js/*.js'])
         .pipe(concat('main.min.js'))
+        .pipe(babel({
+            presets: [
+                [
+                    'es2015',
+                    { modules: false }
+                ]
+            ]
+        }))
         .pipe(gulp.dest('./public/js'));
 });
 
