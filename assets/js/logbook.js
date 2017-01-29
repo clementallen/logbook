@@ -54,22 +54,13 @@ function getTemplate(name, callback) {
     callback($(`#${name}-template`).html());
 }
 
-function compare(a, b) {
-    if (a.date < b.date) {
+function sort(a, b, value) {
+    if (a[value] < b[value]) {
         return -1;
-    } else if (a.date > b.date) {
+    } else if (a[value] > b[value]) {
         return 1;
     }
 
-    return 0;
-}
-
-function orderPilots(a, b) {
-    if (b.pilot < a.pilot) {
-        return 1;
-    } else if (a.pilot < b.pilot) {
-        return -1;
-    }
     return 0;
 }
 
@@ -77,7 +68,9 @@ function getFlights() {
     $.ajax({
         url: '/api/flights',
         success: (flights) => {
-            flights.sort(compare);
+            flights.sort((a, b) => {
+                return sort(a, b, 'date');
+            });
             getTemplate('flight', (template) => {
                 $.each(flights, (i, flight) => {
                     renderFlight(template, flight);
@@ -96,7 +89,9 @@ function getStats() {
         url: '/api/stats',
         success: (stats) => {
             getTemplate('stat', (template) => {
-                stats[0].pilots.sort(orderPilots);
+                stats[0].pilots.sort((a, b) => {
+                    return sort(a, b, 'pilot');
+                });
                 $.each(stats[0].pilots, (i, statistics) => {
                     renderStats(template, statistics);
                 });
@@ -119,7 +114,9 @@ function getAnnualStats() {
             $.ajax({
                 url: `/api/stats/${currentYear}`,
                 success: (stats) => {
-                    stats[0].pilots.sort(orderPilots);
+                    stats[0].pilots.sort((a, b) => {
+                        return sort(a, b, 'pilot');
+                    });
                     $.each(stats[0].pilots, (j, statistics) => {
                         renderStats(template, statistics, currentYear);
                     });

@@ -1,4 +1,4 @@
-const config = {
+export default {
     flagpole: {
         registerEnabled: true
     },
@@ -12,5 +12,3 @@ const config = {
         secretKey: 'aws-secret-key'
     }
 };
-
-module.exports = config;

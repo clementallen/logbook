@@ -1,28 +1,40 @@
-const path = require('path');
-const morgan = require('morgan');
-const express = require('express');
-const mongoose = require('mongoose');
-const passport = require('passport');
-const flash = require('connect-flash');
-const favicon = require('serve-favicon');
-const bodyParser = require('body-parser');
-const session = require('express-session');
-const exphbs = require('express-handlebars');
-const cookieParser = require('cookie-parser');
-const MongoStore = require('connect-mongo/es5')(session);
+import path from 'path';
+import morgan from 'morgan';
+import express from 'express';
+import bluebird from 'bluebird';
+import mongoose from 'mongoose';
+import passport from 'passport';
+import flash from 'connect-flash';
+import favicon from 'serve-favicon';
+import session from 'express-session';
+import exphbs from 'express-handlebars';
+import cookieParser from 'cookie-parser';
+import connectMongo from 'connect-mongo/es5';
+import { json, urlencoded } from 'body-parser';
 
-const index = require('./routes/index');
-const account = require('./routes/account');
-const upload = require('./routes/upload');
-const api = require('./routes/api');
+import config from './config/config';
+import initPassport from './modules/passport';
+import { signedInOnly } from './modules/middleware';
 
-require('./config/passport')(passport);
-const config = require('./config/config');
+// Authentication routes
+import signinRoute from './routes/signin';
+import signoutRoute from './routes/signout';
+import registerRoute from './routes/register';
+
+// General routes
+import api from './routes/api';
+import account from './routes/account';
+import indexRoute from './routes/index';
+import uploadRoute from './routes/upload';
 
 // Init the express app
 const app = express();
 
-mongoose.Promise = global.Promise;
+initPassport(passport);
+
+const MongoStore = connectMongo(session);
+
+mongoose.Promise = bluebird;
 mongoose.connect('mongodb://localhost/logbook');
 
 app.locals = {
@@ -37,12 +49,12 @@ const hbs = exphbs.create({
 app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');
 
-app.use(morgan('dev'));
+app.use(morgan('[:date[clf]] ":method :url HTTP/:http-version" - :status - :response-time[2] ms'));
 app.use(favicon(path.join(__dirname, 'assets', 'favicon.ico')));
-app.use(bodyParser.json({
+app.use(json({
     limit: '10mb'
 }));
-app.use(bodyParser.urlencoded({
+app.use(urlencoded({
     extended: true,
     limit: '10mb'
 }));
@@ -53,7 +65,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     cookie: {
-        maxAge: 2629746000 // one hour in millis
+        maxAge: 2629746000 // one month in millis
     },
     store: new MongoStore({
         mongooseConnection: mongoose.connection
@@ -63,16 +75,18 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-// Use the routes
-app.use('/', index);
-
-require('./routes/signin')(app, passport);
-require('./routes/register')(app, passport);
-require('./routes/signout')(app, passport);
-
-app.use('/account', account);
-app.use('/upload', upload);
+// General routes
 app.use('/api', api);
+app.use('/account', signedInOnly, account);
+indexRoute(app);
+uploadRoute(app);
+
+// Authentication routes
+signinRoute(app, passport);
+signoutRoute(app, passport);
+if (config.flagpole.registerEnabled) {
+    registerRoute(app, passport);
+}
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -91,4 +105,4 @@ app.use((err, req, res, next) => {
     });
 });
 
-module.exports = app;
+export default app;

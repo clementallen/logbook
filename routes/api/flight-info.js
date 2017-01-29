@@ -1,14 +1,13 @@
-const express = require('express');
-const parseIGC = require('../../modules/igcParser.js');
+import { Router } from 'express';
+import parseIGC from '../../modules/igcParser';
 
-const api = express.Router();
+const router = Router();
 
-api.route('/flight-info')
-    .post((req, res) => {
-        const trace = req.body.trace;
-        const flightData = parseIGC(trace);
+router.post('/flight-info', (req, res) => {
+    const trace = req.body.trace;
+    const flightData = parseIGC(trace);
 
-        res.json(flightData);
-    });
+    res.json(flightData);
+});
 
-module.exports = api;
+export default router;

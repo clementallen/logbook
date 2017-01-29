@@ -199,7 +199,7 @@ function parsePosition(positionRecord, model, readEnl) {
 }
 
 // Parsing function starts here
-exports = (igcFile) => {
+function parser(igcFile) {
     const igcLines = igcFile.split('\n');
     if (igcLines.length < 2) {
         throw new IGCException('Not an IGC file');
@@ -344,6 +344,6 @@ exports = (igcFile) => {
     model.takeOffIndex = i - 1;
     model.landingIndex = j;
     return model;
-};
+}
 
-module.exports = exports;
+export default parser;

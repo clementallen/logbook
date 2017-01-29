@@ -1,19 +1,19 @@
-const express = require('express');
-const middleware = require('../modules/middleware');
-const flightApiGet = require('./api/get');
-const flightApiPost = require('./api/post');
-const flightApiSingleGet = require('./api/single-get');
-const flightInfoApiPost = require('./api/flight-info');
-const turnpointsApiGet = require('./api/turnpoints');
-const statsApiGet = require('./api/stats');
+import { Router } from 'express';
+import { signedInOnly } from '../modules/middleware';
+import flightApiGet from './api/get';
+import flightApiPost from './api/post';
+import flightApiSingleGet from './api/single-get';
+import flightInfoApiPost from './api/flight-info';
+import turnpointsApiGet from './api/turnpoints';
+import statsApiGet from './api/stats';
 
-const api = express.Router();
+const router = Router();
 
-api.get('/flights', flightApiGet);
-api.get('/flight/:id', flightApiSingleGet);
-api.post('/flight', middleware.signedInOnly, flightApiPost);
-api.post('/flight-info', middleware.signedInOnly, flightInfoApiPost);
-api.get('/turnpoints', turnpointsApiGet);
-api.get('/stats/:year?', statsApiGet);
+router.get('/flights', flightApiGet);
+router.get('/flights/:id', flightApiSingleGet);
+router.post('/flight', signedInOnly, flightApiPost);
+router.post('/flight-info', signedInOnly, flightInfoApiPost);
+router.get('/turnpoints', signedInOnly, turnpointsApiGet);
+router.get('/stats/:year?', statsApiGet);
 
-module.exports = api;
+export default router;

@@ -1,7 +1,7 @@
-const LocalStrategy = require('passport-local').Strategy;
-const User = require('../models/User');
+import { Strategy as LocalStrategy } from 'passport-local';
+import User from '../models/User';
 
-module.exports = (passport) => {
+export default (passport) => {
     passport.serializeUser((user, done) => {
         done(null, user.id);
     });

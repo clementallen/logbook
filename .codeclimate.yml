@@ -22,4 +22,3 @@ ratings:
   - "**.scss"
 exclude_paths:
 - "**/vendor/**/*"
-- "tests/**/*"

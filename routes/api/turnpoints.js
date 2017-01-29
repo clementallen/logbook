@@ -1,11 +1,10 @@
-const express = require('express');
-const turnpoints = require('../../modules/turnpoints');
+import { Router } from 'express';
+import turnpoints from '../../modules/turnpoints';
 
-const api = express.Router();
+const router = Router();
 
-api.route('/turnpoints')
-    .get((req, res) => {
-        res.json(turnpoints);
-    });
+router.get('/turnpoints', (req, res) => {
+    res.json(turnpoints);
+});
 
-module.exports = api;
+export default router;

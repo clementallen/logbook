@@ -1,4 +1,4 @@
-module.exports = {
+const turnpoints = {
     yattendon: 'YTT',
     yeovilton: 'YTN',
     york: 'YOR',
@@ -1286,3 +1286,5 @@ module.exports = {
     'aboyne dinnet': 'ABD',
     'abbot\'s bromley': 'ABB'
 };
+
+export default turnpoints;

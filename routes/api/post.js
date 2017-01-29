@@ -1,13 +1,13 @@
-const fs = require('fs');
-const s3 = require('s3');
-const path = require('path');
-const express = require('express');
-const Promise = require('bluebird');
-const formidable = require('formidable');
-const Flight = require('../../models/Flight');
-const config = require('../../config/config');
+import fs from 'fs';
+import path from 'path';
+import Promise from 'bluebird';
+import { Router } from 'express';
+import { createClient } from 's3';
+import { IncomingForm } from 'formidable';
+import Flight from '../../models/Flight';
+import config from '../../config/config';
 
-const api = express.Router();
+const router = Router();
 
 function saveFlight(traceData) {
     return new Promise((resolve, reject) => {
@@ -29,19 +29,18 @@ function saveFlight(traceData) {
         flight.landingTime = flightData.landingTimestamp;
         flight.duration = (flightData.landingTimestamp - flightData.takeoffTimestamp) / 1000;
 
-        flight.save((error, dbFlight) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve();
-            }
+        flight.save().then(() => {
+            resolve();
+        })
+        .catch((error) => {
+            reject(error);
         });
     });
 }
 
 function uploadToS3(traceData) {
     return new Promise((resolve, reject) => {
-        const client = s3.createClient({
+        const client = createClient({
             s3Options: {
                 accessKeyId: config.aws.accessKey,
                 secretAccessKey: config.aws.secretKey
@@ -73,7 +72,7 @@ function uploadToS3(traceData) {
 
 function saveTraceLocally(req, res) {
     return new Promise((resolve, reject) => {
-        const form = new formidable.IncomingForm();
+        const form = new IncomingForm();
         const fields = {};
         let fileName;
         let filePath;
@@ -109,7 +108,7 @@ function saveTraceLocally(req, res) {
     });
 }
 
-api.route('/flight').post((req, res) => {
+router.post('/flight', (req, res) => {
     saveTraceLocally(req, res)
         .then((traceData) => {
             return uploadToS3(traceData);
@@ -131,4 +130,4 @@ api.route('/flight').post((req, res) => {
         });
 });
 
-module.exports = api;
+export default router;

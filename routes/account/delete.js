@@ -1,26 +1,24 @@
-const express = require('express');
-const User = require('../../models/User');
+import { Router } from 'express';
+import User from '../../models/User';
 
-const router = express.Router();
+const router = Router();
 
 router.route('/delete')
     .get((req, res) => {
         res.render('delete-account', {
             title: 'Logbook | Delete account',
+            signedIn: req.isAuthenticated(),
             message: req.flash('message')
         });
     })
     .post((req, res) => {
-        User.remove({ username: req.user.username }, (err, mongoResult) => {
-            if (err) {
-                console.log(err);
-            } else {
-                req.logout();
-            }
+        User.remove({ username: req.user.username }).then(() => {
+            req.logout();
+            req.flash('message', 'Your account has been deleted, we\'re sorry to see you go :(');
+            res.redirect('/');
+        }).catch((error) => {
+            req.flash('message', 'We were unable to remove your account.  Please try again');
         });
-        req.flash('message', 'Your account has been deleted, we\'re sorry to see you go :(');
-        res.redirect('/');
     });
 
-
-module.exports = router;
+export default router;
