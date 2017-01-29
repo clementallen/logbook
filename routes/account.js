@@ -10,6 +10,7 @@ router.post('/delete', signedInOnly, accountDelete);
 router.get('/', signedInOnly, (req, res) => {
     res.render('account', {
         title: 'Logbook | Account',
+        signedIn: req.isAuthenticated(),
         user: req.user
     });
 });

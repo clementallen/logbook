@@ -7,6 +7,7 @@ router.route('/delete')
     .get((req, res) => {
         res.render('delete-account', {
             title: 'Logbook | Delete account',
+            signedIn: req.isAuthenticated(),
             message: req.flash('message')
         });
     })
