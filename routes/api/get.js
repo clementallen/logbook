@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import Flight from '../../models/Flight';
 
-const api = Router();
+const router = Router();
 
-api.route('/flights').get((req, res) => {
+router.get('/flights', (req, res) => {
     Flight.find().sort({ date: 1, takeoffTime: 1 }).exec()
         .then((flights) => {
             res.json(flights);
@@ -17,4 +17,4 @@ api.route('/flights').get((req, res) => {
         });
 });
 
-module.exports = api;
+export default router;

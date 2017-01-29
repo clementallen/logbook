@@ -14,6 +14,7 @@ import { json, urlencoded } from 'body-parser';
 
 import config from './config/config';
 import initPassport from './modules/passport';
+import { signedInOnly } from './modules/middleware';
 
 // Authentication routes
 import signinRoute from './routes/signin';
@@ -76,7 +77,7 @@ app.use(flash());
 
 // General routes
 app.use('/api', api);
-app.use('/account', account);
+app.use('/account', signedInOnly, account);
 indexRoute(app);
 uploadRoute(app);
 
@@ -104,4 +105,4 @@ app.use((err, req, res, next) => {
     });
 });
 
-module.exports = app;
+export default app;

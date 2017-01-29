@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import Flight from '../../models/Flight';
 
-const api = Router();
+const router = Router();
 
-api.route('/flights/:id').get((req, res) => {
+router.get('/flights/:id', (req, res) => {
     Flight.findById(req.params.id).then((flight) => {
         let response;
         if (flight !== null) {
@@ -24,4 +24,4 @@ api.route('/flights/:id').get((req, res) => {
     });
 });
 
-module.exports = api;
+export default router;

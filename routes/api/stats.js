@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import Flight from '../../models/Flight';
 
-const api = Router();
+const router = Router();
 
-api.route('/stats/:year?').get((req, res) => {
+router.get('/stats/:year?', (req, res) => {
     let years = [2014, 2015, 2016, 2017];
     if (req.params.year) {
         const year = parseInt(req.params.year, 10);
@@ -60,4 +60,4 @@ api.route('/stats/:year?').get((req, res) => {
     });
 });
 
-module.exports = api;
+export default router;

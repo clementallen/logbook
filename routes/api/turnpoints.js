@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import turnpoints from '../../modules/turnpoints';
 
-const api = Router();
+const router = Router();
 
-api.route('/turnpoints').get((req, res) => {
+router.get('/turnpoints', (req, res) => {
     res.json(turnpoints);
 });
 
-module.exports = api;
+export default router;

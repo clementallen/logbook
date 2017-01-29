@@ -1,13 +1,12 @@
 import { Router } from 'express';
-import { signedInOnly } from '../modules/middleware';
 import accountDelete from './account/delete';
 
 const router = Router();
 
-router.get('/delete', signedInOnly, accountDelete);
-router.post('/delete', signedInOnly, accountDelete);
+router.get('/delete', accountDelete);
+router.post('/delete', accountDelete);
 
-router.get('/', signedInOnly, (req, res) => {
+router.get('/', (req, res) => {
     res.render('account', {
         title: 'Logbook | Account',
         signedIn: req.isAuthenticated(),
@@ -15,4 +14,4 @@ router.get('/', signedInOnly, (req, res) => {
     });
 });
 
-module.exports = router;
+export default router;

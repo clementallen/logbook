@@ -7,7 +7,7 @@ import { IncomingForm } from 'formidable';
 import Flight from '../../models/Flight';
 import config from '../../config/config';
 
-const api = Router();
+const router = Router();
 
 function saveFlight(traceData) {
     return new Promise((resolve, reject) => {
@@ -108,7 +108,7 @@ function saveTraceLocally(req, res) {
     });
 }
 
-api.route('/flight').post((req, res) => {
+router.post('/flight', (req, res) => {
     saveTraceLocally(req, res)
         .then((traceData) => {
             return uploadToS3(traceData);
@@ -130,4 +130,4 @@ api.route('/flight').post((req, res) => {
         });
 });
 
-module.exports = api;
+export default router;

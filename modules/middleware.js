@@ -17,7 +17,7 @@ function signedOutOnly(req, res, next) {
     }
 }
 
-module.exports = {
+export {
     signedInOnly,
     signedOutOnly
 };
