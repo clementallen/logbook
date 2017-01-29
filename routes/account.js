@@ -1,17 +1,16 @@
-const express = require('express');
-const middleware = require('../modules/middleware');
-const accountDelete = require('./account/delete');
+import { Router } from 'express';
+import { signedInOnly } from '../modules/middleware';
+import accountDelete from './account/delete';
 
-const router = express.Router();
+const router = Router();
 
-router.get('/delete', middleware.signedInOnly, accountDelete);
-router.post('/delete', middleware.signedInOnly, accountDelete);
+router.get('/delete', signedInOnly, accountDelete);
+router.post('/delete', signedInOnly, accountDelete);
 
-router.get('/', middleware.signedInOnly, (req, res) => {
+router.get('/', signedInOnly, (req, res) => {
     res.render('account', {
         title: 'Logbook | Account',
-        user: req.user,
-        signedIn: req.isAuthenticated()
+        user: req.user
     });
 });
 

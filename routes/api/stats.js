@@ -1,7 +1,7 @@
-const express = require('express');
-const Flight = require('../../models/Flight');
+import { Router } from 'express';
+import Flight from '../../models/Flight';
 
-const api = express.Router();
+const api = Router();
 
 api.route('/stats/:year?').get((req, res) => {
     let years = [2014, 2015, 2016, 2017];

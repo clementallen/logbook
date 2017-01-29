@@ -1,7 +1,7 @@
-const express = require('express');
-const User = require('../../models/User');
+import { Router } from 'express';
+import User from '../../models/User';
 
-const router = express.Router();
+const router = Router();
 
 router.route('/delete')
     .get((req, res) => {

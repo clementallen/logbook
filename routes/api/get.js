@@ -1,7 +1,7 @@
-const express = require('express');
-const Flight = require('../../models/Flight');
+import { Router } from 'express';
+import Flight from '../../models/Flight';
 
-const api = express.Router();
+const api = Router();
 
 api.route('/flights').get((req, res) => {
     Flight.find().sort({ date: 1, takeoffTime: 1 }).exec()

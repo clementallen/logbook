@@ -1,11 +1,20 @@
-const express = require('express');
-const Flight = require('../../models/Flight');
+import { Router } from 'express';
+import Flight from '../../models/Flight';
 
-const api = express.Router();
+const api = Router();
 
 api.route('/flights/:id').get((req, res) => {
     Flight.findById(req.params.id).then((flight) => {
-        res.json(flight);
+        let response;
+        if (flight !== null) {
+            response = flight;
+        } else {
+            response = {
+                success: false,
+                message: 'Flight not found'
+            };
+        }
+        res.json(response);
     }).catch((error) => {
         res.status(500);
         res.json({
