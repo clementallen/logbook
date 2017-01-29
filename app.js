@@ -48,7 +48,7 @@ const hbs = exphbs.create({
 app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');
 
-app.use(morgan('common'));
+app.use(morgan('[:date[clf]] ":method :url HTTP/:http-version" :status :response-time[2] ms'));
 app.use(favicon(path.join(__dirname, 'assets', 'favicon.ico')));
 app.use(json({
     limit: '10mb'
