@@ -6,7 +6,7 @@ $('#logbook-tablist a').on('click', function(e) {
 function loadPageFromHash() {
     const hash = window.location.hash.substring(1);
     if (hash === '') {
-        $('#logbook-tablist a[aria-controls="2017"]').click();
+        $(`#logbook-tablist a[aria-controls="${new Date().getFullYear()}"]`).click();
     } else {
         $(`#logbook-tablist a[aria-controls=${hash}]`).click();
     }
