@@ -4,7 +4,10 @@ import Flight from '../../models/Flight';
 const router = Router();
 
 router.get('/stats/:year?', (req, res) => {
-    let years = [2014, 2015, 2016, 2017];
+    let years = [];
+    for (let i = 2014; i <= new Date().getFullYear(); i++) {
+        years.push(i);
+    }
     if (req.params.year) {
         const year = parseInt(req.params.year, 10);
         years = [year];

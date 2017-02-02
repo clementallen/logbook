@@ -23,12 +23,7 @@ function renderFlight(template, flight) {
     flight.takeoffTime = formatTime(flight.takeoffTime);
     flight.landingTime = formatTime(flight.landingTime);
     flight.distance += ' km';
-
-    if (flight.fileName === 'no-trace-available.igc') {
-        flight.noTrace = true;
-    } else {
-        flight.noTrace = false;
-    }
+    flight.noTrace = (flight.fileName === 'no-trace-available.igc');
 
     $(`#${flight.year} .logbook-entries`).append(Mustache.render(template, flight));
 }
@@ -50,8 +45,8 @@ function renderStats(template, stats, year) {
     }
 }
 
-function getTemplate(name, callback) {
-    callback($(`#${name}-template`).html());
+function getTemplate(name) {
+    return $(`#${name}-template`).html();
 }
 
 function sort(a, b, value) {
@@ -71,12 +66,11 @@ function getFlights() {
             flights.sort((a, b) => {
                 return sort(a, b, 'date');
             });
-            getTemplate('flight', (template) => {
-                $.each(flights, (i, flight) => {
-                    renderFlight(template, flight);
-                });
-                $('.logbook-table').fadeIn();
+            const template = getTemplate('flight');
+            $.each(flights, (i, flight) => {
+                renderFlight(template, flight);
             });
+            $('.logbook-table').fadeIn();
         },
         error: (error) => {
             console.log(error);
@@ -88,16 +82,15 @@ function getStats() {
     $.ajax({
         url: '/api/stats',
         success: (stats) => {
-            getTemplate('stat', (template) => {
-                stats[0].pilots.sort((a, b) => {
-                    return sort(a, b, 'pilot');
-                });
-                $.each(stats[0].pilots, (i, statistics) => {
-                    renderStats(template, statistics);
-                });
-                renderStats(template, stats[0]);
-                $('.stats-table').fadeIn();
+            const template = getTemplate('stat');
+            stats[0].pilots.sort((a, b) => {
+                return sort(a, b, 'pilot');
             });
+            $.each(stats[0].pilots, (i, statistics) => {
+                renderStats(template, statistics);
+            });
+            renderStats(template, stats[0]);
+            $('.stats-table').fadeIn();
         },
         error: (error) => {
             console.log(error);
@@ -106,27 +99,29 @@ function getStats() {
 }
 
 function getAnnualStats() {
-    const years = [2017, 2016, 2015, 2014];
+    const years = [];
+    for (let i = 2014; i <= new Date().getFullYear(); i++) {
+        years.push(i);
+    }
+    const template = getTemplate('stat');
 
-    getTemplate('stat', (template) => {
-        $.each(years, (i) => {
-            const currentYear = years[i];
-            $.ajax({
-                url: `/api/stats/${currentYear}`,
-                success: (stats) => {
-                    stats[0].pilots.sort((a, b) => {
-                        return sort(a, b, 'pilot');
-                    });
-                    $.each(stats[0].pilots, (j, statistics) => {
-                        renderStats(template, statistics, currentYear);
-                    });
-                    renderStats(template, stats[0], currentYear);
-                    $(`#${currentYear} .stats-table`).fadeIn();
-                },
-                error: (error) => {
-                    console.log(error);
-                }
-            });
+    $.each(years, (i) => {
+        const currentYear = years[i];
+        $.ajax({
+            url: `/api/stats/${currentYear}`,
+            success: (stats) => {
+                stats[0].pilots.sort((a, b) => {
+                    return sort(a, b, 'pilot');
+                });
+                $.each(stats[0].pilots, (j, statistics) => {
+                    renderStats(template, statistics, currentYear);
+                });
+                renderStats(template, stats[0], currentYear);
+                $(`#${currentYear} .stats-table`).fadeIn();
+            },
+            error: (error) => {
+                console.log(error);
+            }
         });
     });
 }

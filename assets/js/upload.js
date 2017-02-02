@@ -1,18 +1,29 @@
+function displayError(error) {
+    $('#add-flight-error').text(JSON.stringify(error)).show();
+}
+
 function timestampToTime(timestamp) {
     const date = new Date(timestamp * 1000);
     return date.toISOString().slice(11, 16);
 }
 
-function getTurnpoints(callback) {
-    $.get('/api/turnpoints', (data) => {
-        callback(data);
+function getTurnpoints() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: '/api/turnpoints',
+            success: (result) => {
+                resolve(result);
+            },
+            error: (error) => {
+                reject(error);
+            }
+        });
     });
 }
 
-function formatTask(taskArray, callback) {
-    let formattedTask = '';
-
-    getTurnpoints((turnpoints) => {
+function formatTask(taskArray, turnpoints) {
+    return new Promise((resolve, reject) => {
+        let formattedTask = '';
         for (let i = 0; i < taskArray.length; i++) {
             let tp = taskArray[i].substring(17).toLowerCase();
 
@@ -24,7 +35,7 @@ function formatTask(taskArray, callback) {
                 formattedTask += `${tp} - `;
             }
         }
-        callback(formattedTask.slice(0, -3));
+        resolve(formattedTask.slice(0, -3));
     });
 }
 
@@ -52,9 +63,16 @@ function populateForm(data) {
     }
 
     if (data.taskpoints.length > 0) {
-        formatTask(data.taskpoints, (formattedTask) => {
-            form.find('#task-field').val(formattedTask);
-        });
+        getTurnpoints()
+            .then((turnpoints) => {
+                return formatTask(data.taskpoints, turnpoints);
+            })
+            .then((task) => {
+                form.find('#task-field').val(task);
+            })
+            .catch((error) => {
+                displayError(error);
+            });
     } else {
         form.find('#task-field').val('Local');
     }
@@ -81,7 +99,7 @@ $('#file-upload').on('change', function(e) {
                     populateForm(response);
                 },
                 error: (error) => {
-                    console.log(error);
+                    displayError(error);
                 }
             });
         };
@@ -127,9 +145,9 @@ $('#add-flight-form').submit(function(e) {
                 $('#add-flight-success').text('Flight upload complete').show();
                 document.getElementById('add-flight-form').reset();
             },
-            error: (err) => {
+            error: (error) => {
                 $('#add-flight-success').hide();
-                $('#add-flight-error').text(JSON.stringify(err)).show();
+                displayError(error);
             }
         });
     }
