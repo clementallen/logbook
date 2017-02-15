@@ -31,7 +31,7 @@ if (messageAlert.length) {
     setTimeout(() => {
         messageAlert.fadeOut();
         lightbox.fadeOut();
-    }, 2000);
+    }, 1500);
 }
 
 // Dismisses alerts and lightboxes
