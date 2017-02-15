@@ -7,10 +7,6 @@ function formatDuration(sec) {
     return `${hours}:${formattedMinutes}`;
 }
 
-function formatDate(date) {
-    return dateFormat(date, 'dS mmm');
-}
-
 function formatTime(timestamp) {
     const date = new Date(timestamp);
 
@@ -18,31 +14,24 @@ function formatTime(timestamp) {
 }
 
 function renderFlight(template, flight) {
-    flight.date = formatDate(flight.date);
+    flight.date = dateFormat(flight.date, 'dS mmm');
     flight.duration = formatDuration(flight.duration);
     flight.takeoffTime = formatTime(flight.takeoffTime);
     flight.landingTime = formatTime(flight.landingTime);
-    flight.distance += ' km';
     flight.noTrace = (flight.fileName === 'no-trace-available.igc');
 
     $(`#${flight.year} .logbook-entries`).append(Mustache.render(template, flight));
 }
 
-function renderStats(template, stats, year) {
-    stats.totalDistance += ' km';
+function renderStats(template, stats, year = 'stats') {
     stats.totalDuration = formatDuration(stats.totalDuration);
     stats.averageDuration = formatDuration(stats.averageDuration);
-    stats.averageDistance = `${Math.round(stats.averageDistance)} km`;
+    stats.averageDistance = Math.round(stats.averageDistance);
+    stats.pilot = stats.pilot ? stats.pilot : 'Total';
 
-    if (!stats.pilot) {
-        stats.pilot = 'Total';
-    }
+    const renderedTemplate = Mustache.render(template, stats);
 
-    if (year) {
-        $(`#${year} .stat-entries`).append(Mustache.render(template, stats));
-    } else {
-        $('#stats .stat-entries').append(Mustache.render(template, stats));
-    }
+    $(`#${year} .stat-entries`).append(renderedTemplate);
 }
 
 function getTemplate(name) {
@@ -100,10 +89,11 @@ function getStats() {
 
 function getAnnualStats() {
     const years = [];
-    for (let i = 2014; i <= new Date().getFullYear(); i++) {
+    const template = getTemplate('stat');
+
+    for (let i = new Date().getFullYear(); i >= 2014; i--) {
         years.push(i);
     }
-    const template = getTemplate('stat');
 
     $.each(years, (i) => {
         const currentYear = years[i];
