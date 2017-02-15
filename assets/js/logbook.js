@@ -38,6 +38,12 @@ function getTemplate(name) {
     return $(`#${name}-template`).html();
 }
 
+function renderError(error, selector) {
+    const template = getTemplate('error');
+    const renderedTemplate = Mustache.render(template, error);
+    $(selector).html(renderedTemplate);
+}
+
 function sort(a, b, value) {
     if (a[value] < b[value]) {
         return -1;
@@ -62,7 +68,10 @@ function getFlights() {
             $('.logbook-table').fadeIn();
         },
         error: (error) => {
-            console.log(error);
+            const errorToDisplay = {
+                message: 'Unable to load flights, please try again'
+            };
+            renderError(errorToDisplay, '.logbook-flights');
         }
     });
 }
@@ -82,7 +91,10 @@ function getStats() {
             $('.stats-table').fadeIn();
         },
         error: (error) => {
-            console.log(error);
+            const errorToDisplay = {
+                message: 'Unable to load stats, please try again'
+            };
+            renderError(errorToDisplay, '#stats');
         }
     });
 }
@@ -110,7 +122,10 @@ function getAnnualStats() {
                 $(`#${currentYear} .stats-table`).fadeIn();
             },
             error: (error) => {
-                console.log(error);
+                const errorToDisplay = {
+                    message: 'Unable to load stats, please try again'
+                };
+                renderError(errorToDisplay, `#${currentYear} .stats-container`);
             }
         });
     });
