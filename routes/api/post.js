@@ -59,12 +59,12 @@ function uploadToS3(traceData) {
 
         uploader.on('error', (error) => {
             console.error('Unable to upload:', error.stack);
-            fs.unlink(traceData.filePath);
+            fs.unlinkSync(traceData.filePath);
             reject(error);
         });
 
         uploader.on('end', () => {
-            fs.unlink(traceData.filePath);
+            fs.unlinkSync(traceData.filePath);
             resolve(traceData);
         });
     });
@@ -87,7 +87,7 @@ function saveTraceLocally(req, res) {
             fileName = file.name;
             filePath = path.join(form.uploadDir, file.name);
             fields.fileName = fileName;
-            fs.rename(file.path, filePath);
+            fs.renameSync(file.path, filePath);
         });
 
         form.on('error', (error) => {
